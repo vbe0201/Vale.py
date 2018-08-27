@@ -83,14 +83,15 @@ async def run():
         await bot.logout()
 
 
-class ValePy(commands.Bot):
+class ValePy(commands.AutoShardedBot):
     """This is a subclass of commands.Bot to give more freedom in customizing it."""
     def __init__(self, **kwargs):
         super().__init__(
             command_prefix=_get_prefix,
             description=kwargs.pop("description"),
             case_insensitive=True,
-            owner_id=kwargs.pop("owner_id")
+            owner_id=kwargs.pop("owner_id"),
+            fetch_offline_members=False
         )
 
         self.pool = kwargs.pop("pool")

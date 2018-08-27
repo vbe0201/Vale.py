@@ -42,9 +42,10 @@ class Miscellaneous:
                         f"<:server:480853504693501963> Guilds: **{len(self.bot.guilds)}**\n"
                         f"<:cpu:480852762284916763> CPU usage: **{psutil.cpu_percent()}%**\n"
                         f"<:memory:480852912428417035> RAM usage: **{round(memory, 2)} mb**\n"
+                        f"<:shard:483733328151707648> Shard count: **{int(self.bot.shard_count)}**\n"
                         f"<:py:481154314593763355> Python version: **{Owner.get_version().rstrip()}**\n"
                         f"<:discordpy:481163331693182977> discord.py version: **{discord.__version__}**\n"
-                        f"\n<:announcement:480853853408067605> Latest Updates: \n```\nUr mom gay.\n```"
+                        f"\n<:announcement:480853853408067605> Latest Updates: \n```\nNothing to show.\n```"
         )
 
         await ctx.send(embed=embed)
