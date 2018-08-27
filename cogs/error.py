@@ -23,15 +23,14 @@ class ErrorHandling:
 
         elif isinstance(error, commands.CommandInvokeError):
             logger.warning(f"Error when invoking the command {ctx.command}:")
-            traceback.print_tb(error.original.__traceback__)
-            logger.error(f"{error.original.__class__.__name__}: {error.original}")
+            logger.error(f"{error.original.__traceback__}\n{error.original.__class__.__name__}: {error.original}")
 
         elif isinstance(error, commands.CommandOnCooldown):
             seconds = round(error.retry_after, 2)
             hours, remainder = divmod(int(seconds), 3600)
             minutes, seconds = divmod(remainder, 60)
 
-            await ctx.send("That command is on cooldown!\n{hours} hours, {minutes} minutes and {seconds} seconds remaining.")
+            await ctx.send(f"That command is on cooldown!\n{hours} hours, {minutes} minutes and {seconds} seconds remaining.")
 
         elif isinstance(error, commands.NoPrivateMessage):
             await ctx.author.send("This command can't be invoked in a DM channel!")
