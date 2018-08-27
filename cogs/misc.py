@@ -45,7 +45,8 @@ class Miscellaneous:
                         f"<:shard:483733328151707648> Shard count: **{int(self.bot.shard_count)}**\n"
                         f"<:py:481154314593763355> Python version: **{Owner.get_version().rstrip()}**\n"
                         f"<:discordpy:481163331693182977> discord.py version: **{discord.__version__}**\n"
-                        f"\n<:announcement:480853853408067605> Latest Updates: \n```\nNothing to show.\n```"
+                        f"\n<:announcement:480853853408067605> Latest Updates: "
+                        f"\n```\n• Adding auto sharding.\n• Ability to search discord.py docs\n• A few bugfixes\n• Some dumb shit like sudo retard\n```"
         )
 
         await ctx.send(embed=embed)
