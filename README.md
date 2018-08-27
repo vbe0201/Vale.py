@@ -1,7 +1,7 @@
 <div align="center">
   <img src="https://user-images.githubusercontent.com/38182450/43689008-bce3ad5e-98f3-11e8-929c-4801a540cefb.png" width="300"/>
   <h1>Vale.py</h1>
-  <strong>A bot whose job is to support technical Discord-Servers.</strong>
+  <strong>A bot to support Discord servers that I like.</strong>
   <br><br>
   <a href="https://github.com/itsVale/Vale.py/wiki"><img src="https://user-images.githubusercontent.com/38182450/43689699-b822f4fe-98fe-11e8-89c9-5fa5da75d088.png" width="200" /></a> &nbsp;
   <a href="#"><img src="https://user-images.githubusercontent.com/38182450/43689793-c45cbea2-98ff-11e8-828a-53d29f425d9c.png" width="200" /></a> &nbsp;
