@@ -67,7 +67,7 @@ async def run():
 
     pool = await asyncpg.create_pool(**login_data)
 
-    description = "Hello, I was coded by Vale#5252 to support technical Discord-Servers."
+    description = "Hello, I was coded by Vale#5252 to support Discord server that he likes."
 
     bot = ValePy(
         description=description, pool=pool,
