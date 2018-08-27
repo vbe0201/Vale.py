@@ -50,7 +50,7 @@ class Docs:
             sub = cache[branch] = {}
 
             for page in pages:
-                async with self.bot.session.get(page) as resp:
+                async with ctx.session.get(page) as resp:
                     if resp.status != 200:
                         return await ctx.send("Couldn't build documentation cache. Please try again later.")
 
