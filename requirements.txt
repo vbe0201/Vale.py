@@ -3,3 +3,4 @@ aiohttp
 asyncpg
 psutil
 lxml
+uvloop

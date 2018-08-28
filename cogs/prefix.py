@@ -1,9 +1,15 @@
 from discord.ext import commands
 import asyncio
 from utils.checks import Checks
+from utils import db
 import logging
 
 logger = logging.getLogger(__name__)
+
+
+class GuildPrefixesList(db.Table, table_name="guild_prefixes"):
+    guild_id = db.Column(db.BigInt, primary_key=True)
+    prefixes = db.Column(db.Array(db.Text))
 
 
 class PrefixManagement:
@@ -11,11 +17,6 @@ class PrefixManagement:
 
     def __init__(self, bot):
         self.bot = bot
-
-    @staticmethod
-    async def _create_table(pool):
-        query = """CREATE TABLE IF NOT EXISTS guild_prefixes (guild_id BIGINT NOT NULL, prefixes TEXT[] NOT NULL, PRIMARY KEY (guild_id));"""
-        await pool.execute(query)
 
     @classmethod
     def set_prefixes(cls, *, check=False, sql_result=None, prefixes):
@@ -66,7 +67,7 @@ class PrefixManagement:
 
     @_prefixes.command(name="add")
     @commands.guild_only()
-    async def _add_prefix(self, ctx, *prefixes: str):
+    async def _add_prefix(self, ctx, *prefixes: commands.clean_content):
         if prefixes is None:
             return await ctx.send("Please enter the prefixes that should be added for this guild!")
 
@@ -109,5 +110,5 @@ class PrefixManagement:
 
 
 def setup(bot):
-    asyncio.ensure_future(PrefixManagement._create_table(bot.pool), loop=bot.loop)
+    asyncio.ensure_future(bot.pool.execute(GuildPrefixesList.create_sql()), loop=bot.loop)
     bot.add_cog(PrefixManagement(bot))

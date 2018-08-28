@@ -1,3 +1,5 @@
+#!/usr/bin/env python3
+
 """
 vale.py, a bot whose job it is to support technical Discord-Servers.
 (c) Vale 2018
@@ -12,14 +14,20 @@ import aiohttp
 import asyncpg
 import logging
 from datetime import datetime
-
 from utils import config, db, context
+
+# For a faster event loop. Doesn't work on Windows.
+try:
+    import uvloop
+except ImportError:
+    pass
+else:
+    asyncio.set_event_loop_policy(uvloop.EventLoopPolicy())
 
 fmt = "%(asctime)s [%(levelname)s] %(message)s"
 logging.basicConfig(format=fmt, level=logging.INFO)
 
 config = config.ConfigJson()
-db = db.Database()
 
 cogs = [
     "cogs.prefix",
@@ -34,20 +42,25 @@ cogs = [
 
 async def _get_prefix(bot, message: discord.Message):
     prefixes = ["sudo "]
+    add = prefixes.append
+    bot_name = bot.user.name
+    bot_id = bot.user.id
+
+    if isinstance(message.channel, discord.DMChannel):
+        add(f"<@{bot_id}>")
+        return prefixes
 
     if bot.pool is None:
         return prefixes
 
-    if message.guild is None:
-        prefixes.append(f"<@{bot.user.id}>")
+    if message.guild.me.display_name != bot_name:
+        add(f"<@!{bot_id}>")
     else:
-        if message.guild.me.display_name != bot.user.name:
-            prefixes.append(f"<@!{bot.user.id}>")
-        else:
-            prefixes.append(f"<@{bot.user.id}>")
+        add(f"<@{bot_id}>")
 
-        guild_prefixes = await db.get_guild_prefixes(bot, message)
-        prefixes.extend(guild_prefixes)
+    # Adding the specific prefixes for the guild to the list of prefixes.
+    guild_prefixes = await db.get_guild_prefixes(bot, message)
+    prefixes.extend(guild_prefixes)
 
     return prefixes
 
