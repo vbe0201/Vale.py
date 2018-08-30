@@ -1,10 +1,8 @@
 #!/usr/bin/env python3
 
 """
-vale.py, a bot whose job it is to support technical Discord-Servers.
+Vale.py, a bot to support Discord servers that I like.
 (c) Vale 2018
-
-Many thanks to Xekresis who allowed me to copy some text from his bot.
 """
 
 import discord
@@ -13,9 +11,9 @@ import asyncio
 import aiohttp
 import asyncpg
 import logging
+import re
 from datetime import datetime
 from utils import config, db, context
-
 # For a faster event loop. Doesn't work on Windows.
 try:
     import uvloop
@@ -40,29 +38,22 @@ cogs = [
 ]
 
 
-async def _get_prefix(bot, message: discord.Message):
-    prefixes = ["sudo "]
+async def _get_prefix(bot, message):
+    prefixes = []
     add = prefixes.append
-    bot_name = bot.user.name
-    bot_id = bot.user.id
 
-    if isinstance(message.channel, discord.DMChannel):
-        add(f"<@{bot_id}>")
-        return prefixes
+    match = re.match(r'sudo\s+?', message.content)
+    if bot.pool is not None:
+        # Getting the guild-specific prefixes.
+        guild_prefixes = await db.get_guild_prefixes(bot, message)
+        prefixes.extend(guild_prefixes)
 
-    if bot.pool is None:
-        return prefixes
-
-    if message.guild.me.display_name != bot_name:
-        add(f"<@!{bot_id}>")
+    if match:
+        add(match.group())
     else:
-        add(f"<@{bot_id}>")
+        add("sudo")
 
-    # Adding the specific prefixes for the guild to the list of prefixes.
-    guild_prefixes = await db.get_guild_prefixes(bot, message)
-    prefixes.extend(guild_prefixes)
-
-    return prefixes
+    return commands.when_mentioned_or(*prefixes)(bot, message)
 
 
 async def run():
@@ -126,6 +117,9 @@ class ValePy(commands.AutoShardedBot):
         logging.info(f"\n====================\nLogged in as:\n{self.user.name}\n{self.user.id}\n====================\n")
         await self.wait_until_ready()
 
+        if not hasattr(self, 'launch'):
+            self.launch = datetime.utcnow()
+
     async def on_message(self, message):
         if message.author.bot:
             return
@@ -141,6 +135,11 @@ class ValePy(commands.AutoShardedBot):
 
         async with ctx.acquire():  # Acquire the pool from the database connection
             await self.invoke(ctx)
+
+    async def logout(self):
+        await super().logout()
+        await self.pool.close()
+        await self.session.close()
 
 
 asyncio.get_event_loop().run_until_complete(run())

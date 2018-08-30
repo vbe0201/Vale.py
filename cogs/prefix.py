@@ -1,8 +1,10 @@
+import discord
 from discord.ext import commands
 import asyncio
 from utils.checks import Checks
 from utils import db
 import logging
+import io
 
 logger = logging.getLogger(__name__)
 
@@ -51,25 +53,47 @@ class PrefixManagement:
 
         return [sql_result, changes]
 
+    @staticmethod
+    async def _format_result(ctx, action: str, prefixes: str):
+        if len(prefixes) > 1500:
+            file = io.BytesIO(prefixes.encode("utf-8"))
+            await ctx.send(f"The following prefixes were successfully {action}:", file=discord.File(file, "prefixes.txt"))
+        else:
+            await ctx.send(f"The following prefixes were successfully {action}: `{prefixes}`")
+
+    @staticmethod
+    async def _list_result(ctx, prefixes):
+        if len(prefixes) > 1950:
+            file = io.BytesIO(prefixes.encode("utf-8"))
+            await ctx.send(f"The following prefixes are available on this guild:", file=discord.File(file, "prefixes.txt"))
+        else:
+            await ctx.send(f"The following prefixes are available on this guild:\n```\n{prefixes}\n```")
+
     @commands.group(name="prefix")
     @commands.guild_only()
     async def _prefixes(self, ctx):
         # A command group for all prefix-relating commands
         if ctx.invoked_subcommand is None:
-            await ctx.send(f"Usage:\n```\nprefix <list | add | remove>\n```")
+            return
 
     @_prefixes.command(name="list")
     @commands.guild_only()
     async def _list_prefixes(self, ctx):
         # List all prefixes that are available for this guild
         prefixes = await self.bot.get_prefix(ctx.message)
-        await ctx.send(f"The following prefixes are available on this guild: {', '.join(prefixes)}")
+        return await self._list_result(ctx, (', '.join(prefixes)))
 
     @_prefixes.command(name="add")
     @commands.guild_only()
     async def _add_prefix(self, ctx, *prefixes: commands.clean_content):
         if prefixes is None:
             return await ctx.send("Please enter the prefixes that should be added for this guild!")
+        elif len(prefixes) > 10:
+            return await ctx.send("You cannot add more than 10 prefixes at the same time, mate.")
+
+        for prefix in prefixes:
+            if len(prefix) > 10:
+                return await ctx.send("I think the prefixes you want to add contain too many characters. Cool it.")
 
         query = """SELECT prefixes FROM guild_prefixes WHERE guild_id = $1;"""
         async with ctx.db.transaction():
@@ -84,7 +108,7 @@ class PrefixManagement:
                     (guild_id) DO UPDATE SET prefixes = $3::TEXT[];"""
             await ctx.pool.execute(query, ctx.guild.id, result[0], result[0])
 
-        await ctx.send(f"The prefixes `{', '.join(result[1])}` were successfully added!")
+        return await self._format_result(ctx, "added", (', '.join(result[1])))
 
     @_prefixes.command(name="remove")
     @commands.guild_only()
@@ -93,6 +117,8 @@ class PrefixManagement:
         # Removes guild-specific prefixes
         if prefixes is None:
             return await ctx.send("Please enter the prefixes you want to remove.")
+        elif len(prefixes) > 10:
+            return await ctx.send("You cannot remove more than 10 prefixes at the same time, mate.")
 
         query = """SELECT prefixes FROM guild_prefixes WHERE guild_id = $1;"""
         async with ctx.db.transaction():
@@ -106,7 +132,7 @@ class PrefixManagement:
                 query = """UPDATE guild_prefixes SET prefixes = $1::TEXT[] WHERE guild_id = $2;"""
                 await ctx.db.execute(query, result[0], ctx.guild.id)
 
-            await ctx.send(f"The prefixes `{', '.join(result[1])}` were successfully removed!")
+            return await self._format_result(ctx, "removed", (', '.join(result[1])))
 
 
 def setup(bot):

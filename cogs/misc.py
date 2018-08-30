@@ -33,7 +33,7 @@ class Miscellaneous:
             title=f"<:statistics:480855204594581516> {self.bot.user.name}'s stats",
             color=EmbedUtils.random_color(),
             description="[GitHub-Repository](https://github.com/itsVale/Vale.py) | "
-                        "[Invite](https://discordapp.com/oauth2/authorize?client_id={self.bot.user.id}&scope=bot&permissions=2146958847) | "
+                        f"[Invite](https://discordapp.com/oauth2/authorize?client_id={self.bot.user.id}&scope=bot&permissions=2146958847) | "
                         f"[Creator: Vale#5252](https://www.twitch.tv/itsvaleee)"
                         "\n━━━━━━━━━━━━━━━━━━━\n\n"
                         f"<:version:480852031742017546> Version: **{self.bot.version}**\n"
