@@ -5,7 +5,8 @@
   <br><br>
   <a href="https://github.com/itsVale/Vale.py/wiki"><img src="https://user-images.githubusercontent.com/38182450/43689699-b822f4fe-98fe-11e8-89c9-5fa5da75d088.png" width="200" /></a> &nbsp;
   <a href="#"><img src="https://user-images.githubusercontent.com/38182450/43689793-c45cbea2-98ff-11e8-828a-53d29f425d9c.png" width="200" /></a> &nbsp;
-  <a href="https://discordapp.com/oauth2/authorize?client_id=458286335304794127&scope=bot&permissions=2146958847"><img src="https://user-images.githubusercontent.com/38182450/43689573-e7e657aa-98fc-11e8-84a4-38d99df2dade.png" width="200" /></a>
+  <a href="https://discordapp.com/oauth2/authorize?client_id=458286335304794127&scope=bot&permissions=2146958847"><img src="https://user-images.githubusercontent.com/38182450/43689573-e7e657aa-98fc-11e8-84a4-38d99df2dade.png" width="200" /></a><br><br>
+  <a class="badge-align" href="https://www.codacy.com/app/itsVale/Vale.py?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=itsVale/Vale.py&amp;utm_campaign=Badge_Grade"><img src="https://api.codacy.com/project/badge/Grade/cf549d36684740199c1a98f33f57f415"/></a>
 </div>
 
 ---
