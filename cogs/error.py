@@ -8,6 +8,14 @@ class ErrorHandling:
     def __init__(self, bot):
         self.bot = bot
 
+    @staticmethod
+    def format_cooldown(error):
+        seconds = round(error.retry_after, 2)
+        hours, remainder = divmod(int(seconds), 3600)
+        minutes, seconds = divmod(remainder, 60)
+
+        return [hours, minutes, seconds]
+
     async def on_command_error(self, ctx, error):
         """Called when a command error occurs."""
 
@@ -25,11 +33,9 @@ class ErrorHandling:
             logger.error(f"{error.original.__traceback__}\n{error.original.__class__.__name__}: {error.original}")
 
         elif isinstance(error, commands.CommandOnCooldown):
-            seconds = round(error.retry_after, 2)
-            hours, remainder = divmod(int(seconds), 3600)
-            minutes, seconds = divmod(remainder, 60)
+            cooldown = self.format_cooldown(error)
 
-            await ctx.send(f"That command is on cooldown!\n{hours} hours, {minutes} minutes and {seconds} seconds remaining.")
+            await ctx.send("That command is on cooldown!\n{0[0]} hours, {0[1]} minutes and {0[2]} seconds remaining.".format(cooldown))
 
         elif isinstance(error, commands.NoPrivateMessage):
             await ctx.author.send("This command can't be invoked in a DM channel!")

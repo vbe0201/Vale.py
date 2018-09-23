@@ -35,7 +35,7 @@ class Owner:
     async def react(message: discord.Message, unicode: str):
         try:
             await message.add_reaction(unicode)
-        except:
+        except Exception:
             logger.error(f"Unable to add reaction {unicode}.")
 
     @staticmethod
@@ -81,7 +81,7 @@ class Owner:
         """Unloads a cog"""
         try:
             self.bot.unload_extension(cog)
-        except:
+        except Exception:
             await self.react(ctx.message, "\u274C")
             await ctx.send(f"```py\n{traceback.format_exc()}\n```")
         else:
@@ -94,7 +94,7 @@ class Owner:
         try:
             self.bot.unload_extension(cog)
             self.bot.load_extension(cog)
-        except:
+        except Exception:
             await self.react(ctx.message, "\u274C")
             await ctx.send(f"```py\n{traceback.format_exc()}\n```")
         else:
@@ -134,7 +134,7 @@ class Owner:
         try:
             with redirect_stdout(stdout):
                 res = await eval_func(self)
-        except:
+        except Exception:
             value = stdout.getvalue()
 
             await self.react(ctx.message, "\u274C")
@@ -209,7 +209,7 @@ class Owner:
         try:
             result = await sql(query)
             await self.react(ctx.message, "\u2705")
-        except:
+        except Exception:
             await self.react(ctx.message, "\u274C")
             return await ctx.send(f"```py\n{traceback.format_exc()}\n```")
 

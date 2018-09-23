@@ -39,34 +39,34 @@ class Evaluate(jdoodle.JDoodle):
         self.bot = bot
 
         self.languages = {
-            "bash":         ("bash", 2, BASH_EMOTE),
-            "sh":           ("bash", 2, BASH_EMOTE),
-            "brainfuck":    ("brainfuck", 0, BRAINFUCK_EMOTE),
-            "bf":           ("brainfuck", 0, BRAINFUCK_EMOTE),
-            "c":            ("c", 3, C_LANG_EMOTE),
-            "coffeescript": ("coffeescript", 2, COFFEESCRIPT_EMOTE),
-            "cpp":          ("cpp14", 2, CPP_EMOTE),
-            "cs":           ("csharp", 2, CSHARP_EMOTE),
-            "dart":         ("dart", 2, DART_EMOTE),
-            "elixir":       ("elixir", 2, ELIXIR_EMOTE),
-            "golang":       ("go", 2, GOLANG_EMOTE),
-            "go":           ("go", 2, GOLANG_EMOTE),
-            "hs":           ("haskell", 2, HASKELL_EMOTE),
-            "java":         ("java", 2, JAVA_EMOTE),
-            "kotlin":       ("kotlin", 1, KOTLIN_EMOTE),
-            "lua":          ("lua", 1, LUA_EMOTE),
-            "javascript":   ("nodejs", 2, NODEJS_EMOTE),
-            "js":           ("nodejs", 2, NODEJS_EMOTE),
-            "pascal":       ("pascal", 2, PASCAL_EMOTE),
-            "perl":         ("perl", 2, PERL_EMOTE),
-            "php":          ("php", 2, PHP_EMOTE),
-            "python":       ("python3", 2, PYTHON_EMOTE),
-            "py":           ("python3", 2, PYTHON_EMOTE),
-            "ruby":         ("ruby", 2, RUBY_EMOTE),
-            "rust":         ("rust", 2, RUST_EMOTE),
-            "scala":        ("scala", 2, SCALA_EMOTE),
-            "sql":          ("sql", 2, SQL_EMOTE),
-            "swift":        ("swift", 2, SWIFT_EMOTE),
+            "bash":         ("bash", 2, BASH_EMOTE),  # noqa
+            "sh":           ("bash", 2, BASH_EMOTE),  # noqa
+            "brainfuck":    ("brainfuck", 0, BRAINFUCK_EMOTE),  # noqa
+            "bf":           ("brainfuck", 0, BRAINFUCK_EMOTE),  # noqa
+            "c":            ("c", 3, C_LANG_EMOTE),  # noqa
+            "coffeescript": ("coffeescript", 2, COFFEESCRIPT_EMOTE),  # noqa
+            "cpp":          ("cpp14", 2, CPP_EMOTE),  # noqa
+            "cs":           ("csharp", 2, CSHARP_EMOTE),  # noqa
+            "dart":         ("dart", 2, DART_EMOTE),  # noqa
+            "elixir":       ("elixir", 2, ELIXIR_EMOTE),  # noqa
+            "golang":       ("go", 2, GOLANG_EMOTE),  # noqa
+            "go":           ("go", 2, GOLANG_EMOTE),  # noqa
+            "hs":           ("haskell", 2, HASKELL_EMOTE),  # noqa
+            "java":         ("java", 2, JAVA_EMOTE),  # noqa
+            "kotlin":       ("kotlin", 1, KOTLIN_EMOTE),  # noqa
+            "lua":          ("lua", 1, LUA_EMOTE),  # noqa
+            "javascript":   ("nodejs", 2, NODEJS_EMOTE),  # noqa
+            "js":           ("nodejs", 2, NODEJS_EMOTE),  # noqa
+            "pascal":       ("pascal", 2, PASCAL_EMOTE),  # noqa
+            "perl":         ("perl", 2, PERL_EMOTE),  # noqa
+            "php":          ("php", 2, PHP_EMOTE),  # noqa
+            "python":       ("python3", 2, PYTHON_EMOTE),  # noqa
+            "py":           ("python3", 2, PYTHON_EMOTE),  # noqa
+            "ruby":         ("ruby", 2, RUBY_EMOTE),  # noqa
+            "rust":         ("rust", 2, RUST_EMOTE),  # noqa
+            "scala":        ("scala", 2, SCALA_EMOTE),  # noqa
+            "sql":          ("sql", 2, SQL_EMOTE),  # noqa
+            "swift":        ("swift", 2, SWIFT_EMOTE),  # noqa
         }
 
     @staticmethod
