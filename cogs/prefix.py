@@ -1,6 +1,5 @@
 import discord
 from discord.ext import commands
-import asyncio
 from utils.checks import Checks
 from utils import db
 import logging
