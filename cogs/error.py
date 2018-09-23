@@ -22,7 +22,7 @@ class ErrorHandling:
             return
 
         elif isinstance(error, commands.CommandInvokeError):
-            logger.warning(f"Error when invoking the command {ctx.command}:")
+            logger.warning(f"Error when trying to invoke the command {ctx.command}:")
             logger.error(f"{error.original.__traceback__}\n{error.original.__class__.__name__}: {error.original}")
 
         elif isinstance(error, commands.CommandOnCooldown):
@@ -45,11 +45,11 @@ class ErrorHandling:
             # For this special case the bot checks what was the command that raised this error.
             # So we can tell the user what he did wrong.
 
-            # Since there is currently no need for this, we just leave it blank by now.
-            return
+            if ctx.command.qualified_name == "source":
+                return await ctx.send("Neither a command nor a cog is matching the given name.")
 
         elif isinstance(error, commands.MissingRequiredArgument):
-            await ctx.send(f"Your commands is missing some arguments. Please use `sudo help {ctx.command}`.")
+            await ctx.send(f"Your command is missing some required arguments. Please use `sudo help {ctx.command}`.")
 
 
 def setup(bot):

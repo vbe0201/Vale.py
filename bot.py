@@ -13,7 +13,8 @@ import asyncpg
 import logging
 import re
 from datetime import datetime
-from utils import config, db, context
+from utils import config, db, context, presence
+
 # For a faster event loop. Doesn't work on Windows.
 try:
     import uvloop
@@ -31,10 +32,11 @@ cogs = [
     "cogs.prefix",
     "cogs.error",
     "cogs.owner",
-    "cogs.docs",
+    "cogs.discordpy",
     "cogs.tags",
     "cogs.misc",
     "cogs.eval",
+    "cogs.idioticapi",
 ]
 
 
@@ -42,8 +44,8 @@ async def _get_prefix(bot, message):
     prefixes = []
     add = prefixes.append
 
-    match = re.match(r'sudo\s+?', message.content)
-    if bot.pool is not None:
+    match = re.match(r"sudo\s+?", message.content)
+    if bot.pool is not None and message.guild is not None:
         # Getting the guild-specific prefixes.
         guild_prefixes = await db.get_guild_prefixes(bot, message)
         prefixes.extend(guild_prefixes)
@@ -57,7 +59,7 @@ async def _get_prefix(bot, message):
 
 
 async def run():
-    """Actually runs the bot and creates a connection pool for a PostgreSQL database as well as a config file."""
+    """Actually runs the bot and creates a connection pool for a PostgreSQL database as well as the config file."""
 
     settings = config.create_config()
 
@@ -77,7 +79,8 @@ async def run():
         description=description, pool=pool,
         owner_id=int(settings["owner_id"]),
         client_id=settings["jdoodle_client"],
-        client_secret=settings["jdoodle_secret"]
+        client_secret=settings["jdoodle_secret"],
+        idiotic_api_key=settings["idiotic_api"]
     )
 
     try:
@@ -99,11 +102,13 @@ class ValePy(commands.AutoShardedBot):
         )
 
         self.pool = kwargs.pop("pool")
-        self.version = "0.1b"
+        self.version = "0.2b"
         self.launch = datetime.utcnow()
+        self.presence_manager = None    # Will be set later.
         self.session = aiohttp.ClientSession(loop=self.loop)
         self.jdoodle_client = kwargs.pop("client_id")
         self.jdoodle_secret = kwargs.pop("client_secret")
+        self.idiot_key = kwargs.pop("idiotic_api_key")
 
         for cog in cogs:
             try:
@@ -116,6 +121,11 @@ class ValePy(commands.AutoShardedBot):
     async def on_ready(self):
         logging.info(f"\n====================\nLogged in as:\n{self.user.name}\n{self.user.id}\n====================\n")
         await self.wait_until_ready()
+
+        if self.presence_manager is None:
+            self.presence_manager = presence.Presence(self)
+
+        await self.presence_manager.change_status()
 
         if not hasattr(self, 'launch'):
             self.launch = datetime.utcnow()
@@ -131,6 +141,9 @@ class ValePy(commands.AutoShardedBot):
 
         ctx = await self.get_context(message, cls=context.Context)
         if ctx.command is None:
+            if ctx.message.content.startswith(self.user.mention):
+                # Send a ping emote.
+                await ctx.send("<:ValePing:488418658574663690>")
             return
 
         async with ctx.acquire():  # Acquire the pool from the database connection

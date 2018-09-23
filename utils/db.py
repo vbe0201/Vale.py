@@ -287,6 +287,12 @@ class Table:
         statements.extend(index.create_sql() for index in cls.indexes)
         return "\n".join(statements)
 
+    @classmethod
+    def build(cls, bot, *, exist_ok=True):
+        """Actually creates a table."""
+
+        return bot.loop.create_task(bot.pool.execute(cls.create_sql(exist_ok=exist_ok)))
+
 
 def all_tables():
     return Table.__subclasses__()

@@ -21,7 +21,7 @@ class PrefixManagement:
         self.bot = bot
 
     @classmethod
-    def set_prefixes(cls, *, check=False, sql_result=None, prefixes):
+    async def set_prefixes(cls, ctx, *, check=False, sql_result=None, prefixes):
         new_prefixes = []
         changes = []
 
@@ -29,6 +29,9 @@ class PrefixManagement:
             if not sql_result:
                 logger.error("sql_result is a required argument that is missing.")
                 return
+
+            if len(sql_result) + len(prefixes) > 5:
+                return await ctx.send("Not more than 5 custom prefixes per guild.")
 
             new_prefixes.extend(sql_result)
             for prefix in prefixes:
@@ -72,20 +75,23 @@ class PrefixManagement:
     @commands.group(name="prefix")
     @commands.guild_only()
     async def _prefixes(self, ctx):
-        # A command group for all prefix-relating commands
+        """A command group for all prefix-related commands."""
         if ctx.invoked_subcommand is None:
             return
 
     @_prefixes.command(name="list")
     @commands.guild_only()
     async def _list_prefixes(self, ctx):
-        # List all prefixes that are available for this guild
+        """Lists all prefixes that are available for this guild."""
+
         prefixes = await self.bot.get_prefix(ctx.message)
         return await self._list_result(ctx, (', '.join(prefixes)))
 
     @_prefixes.command(name="add")
     @commands.guild_only()
     async def _add_prefix(self, ctx, *prefixes: commands.clean_content):
+        """Adds guild-specific prefixes. Cannot have more than 5 per guild."""
+
         if prefixes is None:
             return await ctx.send("Please enter the prefixes that should be added for this guild!")
         elif len(prefixes) > 10:
@@ -100,21 +106,22 @@ class PrefixManagement:
             guild_prefixes = await ctx.pool.fetch(query, ctx.guild.id)
 
             if not guild_prefixes or not guild_prefixes[0]["prefixes"]:
-                result = self.set_prefixes(prefixes=prefixes)
+                result = await self.set_prefixes(ctx, prefixes=prefixes)
             else:
-                result = self.set_prefixes(check=True, sql_result=guild_prefixes[0]["prefixes"], prefixes=prefixes)
+                result = await self.set_prefixes(ctx, check=True, sql_result=guild_prefixes[0]["prefixes"], prefixes=prefixes)
 
             query = """INSERT INTO guild_prefixes (guild_id, prefixes) VALUES ($1, $2::TEXT[]) ON CONFLICT
                     (guild_id) DO UPDATE SET prefixes = $3::TEXT[];"""
             await ctx.pool.execute(query, ctx.guild.id, result[0], result[0])
 
-        return await self._format_result(ctx, "added", (', '.join(result[1])))
+        await self._format_result(ctx, "added", (', '.join(result[1])))
 
     @_prefixes.command(name="remove")
     @commands.guild_only()
     @Checks.has_permissions(manage_guild=True)
     async def _remove_prefix(self, ctx, *prefixes: str):
-        # Removes guild-specific prefixes
+        """Removes guild-specific prefixes."""
+
         if prefixes is None:
             return await ctx.send("Please enter the prefixes you want to remove.")
         elif len(prefixes) > 10:
@@ -132,9 +139,9 @@ class PrefixManagement:
                 query = """UPDATE guild_prefixes SET prefixes = $1::TEXT[] WHERE guild_id = $2;"""
                 await ctx.db.execute(query, result[0], ctx.guild.id)
 
-            return await self._format_result(ctx, "removed", (', '.join(result[1])))
+            await self._format_result(ctx, "removed", (', '.join(result[1])))
 
 
 def setup(bot):
-    asyncio.ensure_future(bot.pool.execute(GuildPrefixesList.create_sql()), loop=bot.loop)
+    GuildPrefixesList.build(bot)
     bot.add_cog(PrefixManagement(bot))

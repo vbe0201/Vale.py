@@ -33,8 +33,8 @@ SWIFT_EMOTE        = "<:swift:477436796855255050>"
 
 
 class Evaluate(jdoodle.JDoodle):
-    def __init__(self, bot, client_id, client_secret):
-        super().__init__(bot, client_id=client_id, client_secret=client_secret)
+    def __init__(self, bot):
+        super().__init__(bot, client_id=bot.jdoodle_client, client_secret=bot.jdoodle_secret)
 
         self.bot = bot
 
@@ -133,4 +133,4 @@ class Evaluate(jdoodle.JDoodle):
 
 
 def setup(bot):
-    bot.add_cog(Evaluate(bot, bot.jdoodle_client, bot.jdoodle_secret))
+    bot.add_cog(Evaluate(bot))

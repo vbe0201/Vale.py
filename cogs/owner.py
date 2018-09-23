@@ -6,9 +6,8 @@ import logging
 import traceback
 import textwrap
 from contextlib import redirect_stdout
-from subprocess import check_output
 import io
-import platform
+import sys
 from utils.db import TableFormat
 from utils.embed import EmbedUtils
 
@@ -22,9 +21,6 @@ class Owner:
     def __init__(self, bot):
         self.bot = bot
         self._last_result = None
-
-    async def __local_check(self, ctx):
-        return await self.bot.is_owner(ctx.author)
 
     @staticmethod
     def clean_code(code):
@@ -40,20 +36,11 @@ class Owner:
         try:
             await message.add_reaction(unicode)
         except:
-            logger.error(f"Unable to add reaction {unicode} to the message with the content {message.content}")
+            logger.error(f"Unable to add reaction {unicode}.")
 
     @staticmethod
     def get_version():
-        os = platform.system()
-
-        if os == "Windows":
-            python = check_output("python3 --version").decode()
-        elif os == "Linux" or os == "Darwin":
-            python = check_output("python3 --version", shell=True).decode()
-        else:
-            python = "Unknown"
-
-        return python
+        return "{0[0]}.{0[1]}.{0[2]}".format(sys.version_info)
 
     def get_embed(self, body: str):
         """Generates a nice Embed for our eval output."""
@@ -74,6 +61,7 @@ class Owner:
         return exec_embed
 
     @commands.command(name="load")
+    @commands.is_owner()
     async def _load(self, ctx, *, cog: str):
         """Loads a cog."""
         try:
@@ -88,6 +76,7 @@ class Owner:
             await self.react(ctx.message, "\u2705")
 
     @commands.command(name="unload")
+    @commands.is_owner()
     async def _unload(self, ctx, *, cog: str):
         """Unloads a cog"""
         try:
@@ -99,6 +88,7 @@ class Owner:
             await self.react(ctx.message, "\u2705")
 
     @commands.command(name="reload")
+    @commands.is_owner()
     async def _reload(self, ctx, *, cog: str):
         """Reloads a cog"""
         try:
@@ -111,6 +101,7 @@ class Owner:
             await self.react(ctx.message, "\u2705")
 
     @commands.command(name="eval")
+    @commands.is_owner()
     async def _eval(self, ctx, *, code: str):
         """Evaluates Python code"""
 
@@ -130,6 +121,7 @@ class Owner:
         body = self.clean_code(code)
         stdout = io.StringIO()
 
+        await ctx.trigger_typing()
         to_eval = f"async def eval_func(self):\n{textwrap.indent(body, ' ')}"
 
         try:
@@ -139,7 +131,6 @@ class Owner:
             return await ctx.send(embed=embed)
 
         eval_func = env["eval_func"]
-        await ctx.trigger_typing()
         try:
             with redirect_stdout(stdout):
                 res = await eval_func(self)
@@ -164,6 +155,7 @@ class Owner:
                 return await ctx.send(embed=embed)
 
     @commands.command(name="shell")
+    @commands.is_owner()
     async def _shell(self, ctx, *, code: str):
         """Evaluates a Shell script."""
 
@@ -202,12 +194,13 @@ class Owner:
         await ctx.send(embed=embed)
 
     @commands.command(name="sql")
+    @commands.is_owner()
     async def _sql(self, ctx, *, code: str):
         """Run SQL code."""
 
         query = self.clean_code(code)
 
-        # if there are multiple queries, we'll use execute since fetch can only execute one query
+        # if there are multiple queries, execute is used since fetch can only execute one query at the same time.
         if query.count(";") > 1:
             sql = ctx.db.execute
         else:

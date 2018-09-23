@@ -8,14 +8,14 @@ from utils.embed import EmbedUtils
 logger = logging.getLogger(__name__)
 
 
-class Docs:
+class DiscordPy:
     def __init__(self, bot):
         self.bot = bot
 
     @staticmethod
     def finder(text: str, collection, *, key=None, lazy=True):
         suggestions = []
-        pattern = '.*?'.join(map(re.escape, text))
+        pattern = ".*?".join(map(re.escape, text))
         regex = re.compile(pattern, flags=re.IGNORECASE)
         for item in collection:
             to_search = key(item) if key else item
@@ -127,4 +127,4 @@ class Docs:
 
 
 def setup(bot):
-    bot.add_cog(Docs(bot))
+    bot.add_cog(DiscordPy(bot))
