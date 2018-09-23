@@ -7,29 +7,29 @@ from utils.embed import EmbedUtils
 
 logger = logging.getLogger(__name__)
 
-BASH_EMOTE         = "<:bash:481893449633890304>"
-BRAINFUCK_EMOTE    = "<:brainfuck:477434846738907137>"
-C_LANG_EMOTE       = "<:clang:481893204111654922>"
-COFFEESCRIPT_EMOTE = "<:coffeescript:481895170783313920>"
-CPP_EMOTE          = "<:cpp:477434843219755008>"
-CSHARP_EMOTE       = "<:csharp:477433027010756608>"
-DART_EMOTE         = "<:dartlang:481897509887934476>"
-ELIXIR_EMOTE       = "<:elixir:481896314175750146>"
-GOLANG_EMOTE       = "<:go:476742208045711362>"
-HASKELL_EMOTE      = "<:haskell:481894936279515136>"
-JAVA_EMOTE         = "<:java:380372941616971777>"
-KOTLIN_EMOTE       = "<:kotlin:477434839071457282>"
-LUA_EMOTE          = "<:lua:477434841822920714>"
-NODEJS_EMOTE       = "<:nodejs:380374647302258690>"
-PASCAL_EMOTE       = "<:pascal:481894128872062980>"
-PERL_EMOTE         = "<:perl:481894462772215808>"
-PHP_EMOTE          = "<:php:477436804035772416>"
-PYTHON_EMOTE       = "<:py:481154314593763355>"
-RUBY_EMOTE         = "<:ruby:477436800026148865>"
-RUST_EMOTE         = "<:rust:477436806959202324>"
-SCALA_EMOTE        = "<:scala:477436801762590733>"
-SQL_EMOTE          = "<:mysql:477436808704032768>"
-SWIFT_EMOTE        = "<:swift:477436796855255050>"
+BASH_EMOTE         = "<:bash:481893449633890304>"  # noqa
+BRAINFUCK_EMOTE    = "<:brainfuck:477434846738907137>"  # noqa
+C_LANG_EMOTE       = "<:clang:481893204111654922>"  # noqa
+COFFEESCRIPT_EMOTE = "<:coffeescript:481895170783313920>"  # noqa
+CPP_EMOTE          = "<:cpp:477434843219755008>"  # noqa
+CSHARP_EMOTE       = "<:csharp:477433027010756608>"  # noqa
+DART_EMOTE         = "<:dartlang:481897509887934476>"  # noqa
+ELIXIR_EMOTE       = "<:elixir:481896314175750146>"  # noqa
+GOLANG_EMOTE       = "<:go:476742208045711362>"  # noqa
+HASKELL_EMOTE      = "<:haskell:481894936279515136>"  # noqa
+JAVA_EMOTE         = "<:java:380372941616971777>"  # noqa
+KOTLIN_EMOTE       = "<:kotlin:477434839071457282>"  # noqa
+LUA_EMOTE          = "<:lua:477434841822920714>"  # noqa
+NODEJS_EMOTE       = "<:nodejs:380374647302258690>"  # noqa
+PASCAL_EMOTE       = "<:pascal:481894128872062980>"  # noqa
+PERL_EMOTE         = "<:perl:481894462772215808>"  # noqa
+PHP_EMOTE          = "<:php:477436804035772416>"  # noqa
+PYTHON_EMOTE       = "<:py:481154314593763355>"  # noqa
+RUBY_EMOTE         = "<:ruby:477436800026148865>"  # noqa
+RUST_EMOTE         = "<:rust:477436806959202324>"  # noqa
+SCALA_EMOTE        = "<:scala:477436801762590733>"  # noqa
+SQL_EMOTE          = "<:mysql:477436808704032768>"  # noqa
+SWIFT_EMOTE        = "<:swift:477436796855255050>"  # noqa
 
 
 class Evaluate(jdoodle.JDoodle):
