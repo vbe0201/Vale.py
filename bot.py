@@ -36,7 +36,6 @@ cogs = [
     "cogs.tags",
     "cogs.misc",
     "cogs.eval",
-    "cogs.idioticapi",
 ]
 
 
