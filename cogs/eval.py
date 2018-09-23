@@ -7,29 +7,29 @@ from utils.embed import EmbedUtils
 
 logger = logging.getLogger(__name__)
 
-BASH_EMOTE         = "<:bash:481893449633890304>"  # noqa
-BRAINFUCK_EMOTE    = "<:brainfuck:477434846738907137>"  # noqa
-C_LANG_EMOTE       = "<:clang:481893204111654922>"  # noqa
-COFFEESCRIPT_EMOTE = "<:coffeescript:481895170783313920>"  # noqa
-CPP_EMOTE          = "<:cpp:477434843219755008>"  # noqa
-CSHARP_EMOTE       = "<:csharp:477433027010756608>"  # noqa
-DART_EMOTE         = "<:dartlang:481897509887934476>"  # noqa
-ELIXIR_EMOTE       = "<:elixir:481896314175750146>"  # noqa
-GOLANG_EMOTE       = "<:go:476742208045711362>"  # noqa
-HASKELL_EMOTE      = "<:haskell:481894936279515136>"  # noqa
-JAVA_EMOTE         = "<:java:380372941616971777>"  # noqa
-KOTLIN_EMOTE       = "<:kotlin:477434839071457282>"  # noqa
-LUA_EMOTE          = "<:lua:477434841822920714>"  # noqa
-NODEJS_EMOTE       = "<:nodejs:380374647302258690>"  # noqa
-PASCAL_EMOTE       = "<:pascal:481894128872062980>"  # noqa
-PERL_EMOTE         = "<:perl:481894462772215808>"  # noqa
-PHP_EMOTE          = "<:php:477436804035772416>"  # noqa
-PYTHON_EMOTE       = "<:py:481154314593763355>"  # noqa
-RUBY_EMOTE         = "<:ruby:477436800026148865>"  # noqa
-RUST_EMOTE         = "<:rust:477436806959202324>"  # noqa
-SCALA_EMOTE        = "<:scala:477436801762590733>"  # noqa
-SQL_EMOTE          = "<:mysql:477436808704032768>"  # noqa
-SWIFT_EMOTE        = "<:swift:477436796855255050>"  # noqa
+BASH_EMOTE         = "<:bash:481893449633890304>"
+BRAINFUCK_EMOTE    = "<:brainfuck:477434846738907137>"
+C_LANG_EMOTE       = "<:clang:481893204111654922>"
+COFFEESCRIPT_EMOTE = "<:coffeescript:481895170783313920>"
+CPP_EMOTE          = "<:cpp:477434843219755008>"
+CSHARP_EMOTE       = "<:csharp:477433027010756608>"
+DART_EMOTE         = "<:dartlang:481897509887934476>"
+ELIXIR_EMOTE       = "<:elixir:481896314175750146>"
+GOLANG_EMOTE       = "<:go:476742208045711362>"
+HASKELL_EMOTE      = "<:haskell:481894936279515136>"
+JAVA_EMOTE         = "<:java:380372941616971777>"
+KOTLIN_EMOTE       = "<:kotlin:477434839071457282>"
+LUA_EMOTE          = "<:lua:477434841822920714>"
+NODEJS_EMOTE       = "<:nodejs:380374647302258690>"
+PASCAL_EMOTE       = "<:pascal:481894128872062980>"
+PERL_EMOTE         = "<:perl:481894462772215808>"
+PHP_EMOTE          = "<:php:477436804035772416>"
+PYTHON_EMOTE       = "<:py:481154314593763355>"
+RUBY_EMOTE         = "<:ruby:477436800026148865>"
+RUST_EMOTE         = "<:rust:477436806959202324>"
+SCALA_EMOTE        = "<:scala:477436801762590733>"
+SQL_EMOTE          = "<:mysql:477436808704032768>"
+SWIFT_EMOTE        = "<:swift:477436796855255050>"
 
 
 class Evaluate(jdoodle.JDoodle):
@@ -39,34 +39,34 @@ class Evaluate(jdoodle.JDoodle):
         self.bot = bot
 
         self.languages = {
-            "bash":         ("bash", 2, BASH_EMOTE),  # noqa
-            "sh":           ("bash", 2, BASH_EMOTE),  # noqa
-            "brainfuck":    ("brainfuck", 0, BRAINFUCK_EMOTE),  # noqa
-            "bf":           ("brainfuck", 0, BRAINFUCK_EMOTE),  # noqa
-            "c":            ("c", 3, C_LANG_EMOTE),  # noqa
-            "coffeescript": ("coffeescript", 2, COFFEESCRIPT_EMOTE),  # noqa
-            "cpp":          ("cpp14", 2, CPP_EMOTE),  # noqa
-            "cs":           ("csharp", 2, CSHARP_EMOTE),  # noqa
-            "dart":         ("dart", 2, DART_EMOTE),  # noqa
-            "elixir":       ("elixir", 2, ELIXIR_EMOTE),  # noqa
-            "golang":       ("go", 2, GOLANG_EMOTE),  # noqa
-            "go":           ("go", 2, GOLANG_EMOTE),  # noqa
-            "hs":           ("haskell", 2, HASKELL_EMOTE),  # noqa
-            "java":         ("java", 2, JAVA_EMOTE),  # noqa
-            "kotlin":       ("kotlin", 1, KOTLIN_EMOTE),  # noqa
-            "lua":          ("lua", 1, LUA_EMOTE),  # noqa
-            "javascript":   ("nodejs", 2, NODEJS_EMOTE),  # noqa
-            "js":           ("nodejs", 2, NODEJS_EMOTE),  # noqa
-            "pascal":       ("pascal", 2, PASCAL_EMOTE),  # noqa
-            "perl":         ("perl", 2, PERL_EMOTE),  # noqa
-            "php":          ("php", 2, PHP_EMOTE),  # noqa
-            "python":       ("python3", 2, PYTHON_EMOTE),  # noqa
-            "py":           ("python3", 2, PYTHON_EMOTE),  # noqa
-            "ruby":         ("ruby", 2, RUBY_EMOTE),  # noqa
-            "rust":         ("rust", 2, RUST_EMOTE),  # noqa
-            "scala":        ("scala", 2, SCALA_EMOTE),  # noqa
-            "sql":          ("sql", 2, SQL_EMOTE),  # noqa
-            "swift":        ("swift", 2, SWIFT_EMOTE),  # noqa
+            "bash":         ("bash", 2, BASH_EMOTE),
+            "sh":           ("bash", 2, BASH_EMOTE),
+            "brainfuck":    ("brainfuck", 0, BRAINFUCK_EMOTE),
+            "bf":           ("brainfuck", 0, BRAINFUCK_EMOTE),
+            "c":            ("c", 3, C_LANG_EMOTE),
+            "coffeescript": ("coffeescript", 2, COFFEESCRIPT_EMOTE),
+            "cpp":          ("cpp14", 2, CPP_EMOTE),
+            "cs":           ("csharp", 2, CSHARP_EMOTE),
+            "dart":         ("dart", 2, DART_EMOTE),
+            "elixir":       ("elixir", 2, ELIXIR_EMOTE),
+            "golang":       ("go", 2, GOLANG_EMOTE),
+            "go":           ("go", 2, GOLANG_EMOTE),
+            "hs":           ("haskell", 2, HASKELL_EMOTE),
+            "java":         ("java", 2, JAVA_EMOTE),
+            "kotlin":       ("kotlin", 1, KOTLIN_EMOTE),
+            "lua":          ("lua", 1, LUA_EMOTE),
+            "javascript":   ("nodejs", 2, NODEJS_EMOTE),
+            "js":           ("nodejs", 2, NODEJS_EMOTE),
+            "pascal":       ("pascal", 2, PASCAL_EMOTE),
+            "perl":         ("perl", 2, PERL_EMOTE),
+            "php":          ("php", 2, PHP_EMOTE),
+            "python":       ("python3", 2, PYTHON_EMOTE),
+            "py":           ("python3", 2, PYTHON_EMOTE),
+            "ruby":         ("ruby", 2, RUBY_EMOTE),
+            "rust":         ("rust", 2, RUST_EMOTE),
+            "scala":        ("scala", 2, SCALA_EMOTE),
+            "sql":          ("sql", 2, SQL_EMOTE),
+            "swift":        ("swift", 2, SWIFT_EMOTE),
         }
 
     @staticmethod
