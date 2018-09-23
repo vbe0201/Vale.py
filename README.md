@@ -10,6 +10,8 @@
 
 ---
 
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/e73251f963d14d3980761715f33462bd)](https://app.codacy.com/app/itsVale/Vale.py?utm_source=github.com&utm_medium=referral&utm_content=itsVale/Vale.py&utm_campaign=Badge_Grade_Dashboard)
+
 ## This bot is under active development!
 
 For now it doesn't make much sense to invite the bot since it won't be
