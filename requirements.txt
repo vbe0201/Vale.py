@@ -4,3 +4,4 @@ asyncpg
 psutil
 lxml
 uvloop
+pylava
