@@ -73,7 +73,7 @@ class Timestamp(SQLType):
 class Interval(SQLType):
     def __init__(self, *, field=None):
         self.field = field
-    
+
     @property
     def sql(self):
         if self.field:

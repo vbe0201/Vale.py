@@ -69,7 +69,8 @@ class Evaluate(jdoodle.JDoodle):
             "swift":        ("swift", 2, SWIFT_EMOTE),
         }
 
-    def get_embed(self, language, emote, output):
+    @staticmethod
+    def get_embed(language, emote, output):
         """Returns an embed formatted with the output and the language that was evaluated."""
 
         embed = discord.Embed(
@@ -88,7 +89,8 @@ class Evaluate(jdoodle.JDoodle):
 
         return embed
 
-    def clean_code(self, *, code: str):
+    @staticmethod
+    def clean_code(code: str):
         """Removes codeblocks and returns the language as well as the code to be evaluated as a list."""
 
         if code.startswith("```") and code.endswith("```"):
@@ -115,7 +117,7 @@ class Evaluate(jdoodle.JDoodle):
         Use a specific codeblock for a language to evaluate code like in the example above.
         """
 
-        body = self.clean_code(code=code)
+        body = self.clean_code(code)
 
         if body[0] is None or len(body[0]) == 0:
             return await ctx.send("Please specify a language that should be evaluated in your code block.")
