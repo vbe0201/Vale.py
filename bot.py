@@ -78,8 +78,7 @@ async def run():
         description=description, pool=pool,
         owner_id=int(settings["owner_id"]),
         client_id=settings["jdoodle_client"],
-        client_secret=settings["jdoodle_secret"],
-        idiotic_api_key=settings["idiotic_api"]
+        client_secret=settings["jdoodle_secret"]
     )
 
     try:
@@ -107,7 +106,6 @@ class ValePy(commands.AutoShardedBot):
         self.session = aiohttp.ClientSession(loop=self.loop)
         self.jdoodle_client = kwargs.pop("client_id")
         self.jdoodle_secret = kwargs.pop("client_secret")
-        self.idiot_key = kwargs.pop("idiotic_api_key")
 
         for cog in cogs:
             try:
