@@ -21,8 +21,7 @@ class ConfigJson:
         if not os.path.isfile("config.json"):
             with open("config.json", "w") as f:
                 # Create general configuration for the bot
-                settings = {}
-                settings.update((key, input(value)) for key, value in self.options.keys())
+                settings = {key: input(value) for key, value in self.options.items()}
 
                 json.dump(settings, f, sort_keys=True, indent=4)
         else:
