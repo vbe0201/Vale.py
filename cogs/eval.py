@@ -157,6 +157,5 @@ class Evaluate(jdoodle.JDoodle):
         except jdoodle.JDoodleRequestFailedError as e:
             logger.error(e)
 
-
 def setup(bot):
     bot.add_cog(Evaluate(bot))
