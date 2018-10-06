@@ -132,6 +132,30 @@ class Evaluate(jdoodle.JDoodle):
             await ctx.send(embed=embed)
         except jdoodle.JDoodleRequestFailedError as e:
             logger.error(e)
+            
+    @commands.command(name="credits")
+    @commands.cooldown(1, 60.0, commands.BucketType.user)
+    async def _credits(self, ctx):        
+        try:
+            credits = await super()._credit_spend()
+            
+            embed = discord.Embed(
+                title=f"Credits left",
+                description="━━━━━━━━━━━━━━━━━━━",
+                color=EmbedUtils.random_color()
+            )
+            embed.add_field(
+                name="Credit-spend",
+                value=f"```\nYou have spend {credits} today!\n```"
+            )
+            embed.set_footer(
+                text="This info came from the JDoodle API.",
+                icon_url="https://bit.ly/2CvWRiA"
+            )
+            
+            await ctx.send(embed=embed)
+        except jdoodle.JDoodleRequestFailedError as e:
+            logger.error(e)
 
 
 def setup(bot):
