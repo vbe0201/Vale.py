@@ -35,6 +35,7 @@ class JDoodle:
     def __init__(self, bot, client_id, client_secret):
         self.bot = bot
         self.base_url = "https://api.jdoodle.com/v1/execute"
+        self.credit_url = "https://api.jdoodle.com/v1/credit-spent"
 
         self.client_id = client_id
         self.client_secret = client_secret
@@ -51,4 +52,15 @@ class JDoodle:
         }
 
         result = await self.bot.session.post(self.base_url, json=params)
+        return JDoodleResponse.parse_result(result=await result.json())
+    
+    async def _credit_spend(self):
+        """Looks for the number of credits used today"""
+        
+        params = {
+            "clientId": self.client_id,
+            "clientSecret": self.client_secret
+        }
+        
+        result = await self.bot.session.post(self.credit_url, json=params)
         return JDoodleResponse.parse_result(result=await result.json())
