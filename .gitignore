@@ -156,3 +156,4 @@ venv.bak/
 .idea/
 .DS_Store
 config.json
+/logs/
