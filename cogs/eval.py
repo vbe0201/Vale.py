@@ -133,11 +133,12 @@ class Evaluate(jdoodle.JDoodle):
         except jdoodle.JDoodleRequestFailedError as e:
             logger.error(e)
             
+
     @commands.command(name="credits")
     @commands.cooldown(1, 60.0, commands.BucketType.user)
-    async def _credits(self, ctx):        
+    async def show_credits(self, ctx):        
         try:
-            credits = await super()._credit_spend()
+            credits_left = await super()._credit_spend()
             
             embed = discord.Embed(
                 title=f"Credits left",
