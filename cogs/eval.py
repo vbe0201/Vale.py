@@ -147,7 +147,7 @@ class Evaluate(jdoodle.JDoodle):
             )
             embed.add_field(
                 name="Credit spend",
-                value=f"```\nYou have spent {credits} today!\n```"
+                value=f"```\nYou have spent {credits_left} today!\n```"
             )
             embed.set_footer(
                 text="This info came from the JDoodle API.",
