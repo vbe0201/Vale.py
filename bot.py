@@ -14,6 +14,7 @@ import logging
 import re
 from datetime import datetime
 from utils import config, db, context, presence
+from pathlib import Path
 
 # For a faster event loop. Doesn't work on Windows.
 try:
@@ -23,8 +24,6 @@ except ImportError:
 else:
     asyncio.set_event_loop_policy(uvloop.EventLoopPolicy())
 
-fmt = "%(asctime)s [%(levelname)s] %(message)s"
-logging.basicConfig(format=fmt, level=logging.INFO)
 
 config = config.ConfigJson()
 
@@ -37,6 +36,19 @@ cogs = [
     "cogs.misc",
     "cogs.eval",
 ]
+
+
+def init_logging():
+    log_dir = Path(__file__).parent / 'logs'
+    log_dir.mkdir(exist_ok=True)
+    logging.basicConfig(
+        format="%(asctime)s [%(levelname)s] %(message)s",
+        level=logging.INFO,
+        handlers=[
+            logging.StreamHandler(),
+            logging.FileHandler(log_dir / 'log.txt')
+        ]
+    )
 
 
 async def _get_prefix(bot, message):
@@ -152,4 +164,10 @@ class ValePy(commands.AutoShardedBot):
         await self.session.close()
 
 
-asyncio.get_event_loop().run_until_complete(run())
+def main():
+    init_logging()
+    asyncio.get_event_loop().run_until_complete(run())
+
+
+if __name__ == '__main__':
+    main()
