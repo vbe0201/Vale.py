@@ -34,7 +34,7 @@ ___
 After you got the source code of the bot, run
 
 ```$sql
-    python3 -m pip install -r -U requirements.txt
+    python3 -m pip install -U -r requirements.txt
 ```
 
 to install all the requirements the bot has.
