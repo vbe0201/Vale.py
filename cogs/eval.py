@@ -135,7 +135,7 @@ class Evaluate(jdoodle.JDoodle):
             
 
     @commands.command(name="credits")
-    @commands.cooldown(1, 60.0, commands.BucketType.user)
+    @commands.is_owner()
     async def show_credits(self, ctx):        
         try:
             credits_left = await super()._credit_spend()
@@ -146,8 +146,8 @@ class Evaluate(jdoodle.JDoodle):
                 color=EmbedUtils.random_color()
             )
             embed.add_field(
-                name="Credit-spend",
-                value=f"```\nYou have spend {credits} today!\n```"
+                name="Credit spend",
+                value=f"```\nYou have spent {credits} today!\n```"
             )
             embed.set_footer(
                 text="This info came from the JDoodle API.",
