@@ -15,12 +15,21 @@ BASE_URL = "https://discordpy.readthedocs.io"
 # Discord pages used to build documentation cache
 PAGE_TYPES = {
     "rewrite": (
-        "/en/rewrite/api.html",
-        "/en/rewrite/ext/commands/api.html"
+        "en/rewrite/api.html",
+        "en/rewrite/ext/commands/api.html"
     ),
     "latest": (
-        "/en/latest/api.html",
+        "en/latest/api.html",
     )
+}
+
+# Helpers to convert search terms to the proper documentation keys
+HELPERS = {
+    "vc": "VoiceClient",
+    "msg": "Message",
+    "color": "Color",
+    "perm": "Permissions",
+    "channel": "TextChannel",
 }
 
 class DiscordPy:
@@ -69,7 +78,7 @@ class DiscordPy:
 
                     text = await resp.text(encoding="utf-8")
                     root = etree.fromstring(text, etree.HTMLParser())
-                    nodes = root.findall(".//dt/a[@class='headerlink']")
+                    nodes = root.iterfind(".//dt/a[@class='headerlink']")
 
                     for node in nodes:
                         href = node.get("href", "")
@@ -91,25 +100,17 @@ class DiscordPy:
         search = search.replace(" ", "_")
 
         if branch == "rewrite":
-            helpers = {
-                "vc": "VoiceClient",
-                "msg": "Message",
-                "color": "Color",
-                "perm": "Permissions",
-                "channel": "TextChannel",
-            }
-
             q = search.lower()
             if hasattr(discord.abc.Messageable, q):
                 search = f"abc.Messageable.{q}"
 
             def replace(o):
-                return helpers.get(o.group(0), '')
+                return HELPERS.get(o.group(0), '')
 
-            pattern = re.compile("|".join(fr"\b{key}\b" for key in helpers.keys()))
+            pattern = re.compile("|".join(fr"\b{key}\b" for key in HELPERS))
             search = pattern.sub(replace, search)
 
-        cache = list(self._docs_cache[branch].items())
+        cache = self._docs_cache[branch].items()
 
         matches = self.finder(search, cache, key=lambda t: t[0], lazy=False)[:10]
 
