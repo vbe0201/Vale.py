@@ -32,6 +32,7 @@ HELPERS = {
     "channel": "TextChannel",
 }
 
+
 class DiscordPy:
     """Bot extension to search discord.py docs."""
 
