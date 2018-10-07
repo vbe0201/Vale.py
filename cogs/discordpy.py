@@ -40,7 +40,7 @@ class DiscordPy:
         self._docs_cache = None
 
     @staticmethod
-    def finder(text: str, collection, *, key=None, lazy=True):
+    def finder(text: str, collection, *, key=None, topn=None):
         """Find text in a cache (collection) of documents."""
 
         suggestions = []
@@ -58,10 +58,10 @@ class DiscordPy:
             return tup
 
         gen_output = (z for _, _, z in sorted(suggestions, key=sort_key))
-        if lazy:
+        if topn is None:
             return gen_output
 
-        return list(gen_output)
+        return list(gen_output)[:topn]
 
     async def build_docs_cache(self, ctx):
         """Build documentation cache."""
@@ -112,7 +112,7 @@ class DiscordPy:
 
         cache = self._docs_cache[branch].items()
 
-        matches = self.finder(search, cache, key=lambda t: t[0], lazy=False)[:10]
+        matches = self.finder(search, cache, key=lambda t: t[0], topn=10)
 
         e = discord.Embed(title="discord.py documentation search", colour=EmbedUtils.random_color())
 
