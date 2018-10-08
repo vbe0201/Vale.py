@@ -41,24 +41,19 @@ class DiscordPy:
         self._docs_cache = None
 
     @staticmethod
-    def finder(text: str, collection, *, key=None, topn=None):
+    def finder(text: str, collection: dict, topn=None):
         """Find text in a cache (collection) of documents."""
 
         suggestions = []
         pattern = ".*?".join(map(re.escape, text))
         regex = re.compile(pattern, flags=re.IGNORECASE)
-        for item in collection:
-            to_search = key(item) if key else item
-            r = regex.search(to_search)
+        for key, val in collection.items():
+            r = regex.search(key)
             if r:
-                suggestions.append((len(r.group()), r.start(), item))
+                suggestions.append((len(r.group()), r.start(), (key, val)))
 
-        def sort_key(tup):
-            if key:
-                return tup[0], tup[1], key(tup[2])
-            return tup
-
-        gen_output = (z for _, _, z in sorted(suggestions, key=sort_key))
+        suggestions.sort(key=lambda tup: (tup[0], tup[1], tup[2][0]))
+        gen_output = (z for _, _, z in suggestions)
         if topn is None:
             return gen_output
 
@@ -88,7 +83,7 @@ class DiscordPy:
 
         self._docs_cache = cache
 
-    async def search_docs(self, ctx, branch, search):
+    async def search_docs(self, ctx, branch: str, search: str):
         """Base function to search discord.py docs and list results in an embed."""
 
         if search is None:
@@ -113,7 +108,7 @@ class DiscordPy:
 
         cache = self._docs_cache[branch].items()
 
-        matches = self.finder(search, cache, key=lambda t: t[0], topn=10)
+        matches = self.finder(search, cache, topn=10)
 
         e = discord.Embed(title="discord.py documentation search", colour=EmbedUtils.random_color())
 
