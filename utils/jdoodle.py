@@ -30,11 +30,18 @@ class JDoodleResponse(object):
             cpu_time=result["cpuTime"]
         )
 
+    @classmethod
+    def parse_credit_spent(cls, *, result: dict):
+        if result["statusCode"] == int(401):
+            raise JDoodleRequestFailedError(f"Status Code 401: Invalid API credentials.")
+        return result["used"]
+
 
 class JDoodle:
     def __init__(self, bot, client_id, client_secret):
         self.bot = bot
         self.base_url = "https://api.jdoodle.com/v1/execute"
+        self.credit_spent_url = "https://api.jdoodle.com/v1/credit-spent"
 
         self.client_id = client_id
         self.client_secret = client_secret
@@ -52,3 +59,12 @@ class JDoodle:
 
         result = await self.bot.session.post(self.base_url, json=params)
         return JDoodleResponse.parse_result(result=await result.json())
+
+    async def _credit_spent(self):
+        params = {
+            "clientId": self.client_id,
+            "clientSecret": self.client_secret
+        }
+
+        result = await self.bot.session.post(self.credit_spent_url, json=params)
+        return JDoodleResponse.parse_credit_spent(result=await result.json())

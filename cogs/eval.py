@@ -1,35 +1,36 @@
+import time
+
 import discord
 from discord.ext import commands
 import logging
 import utils.jdoodle as jdoodle
 from utils.embed import EmbedUtils
 
-
 logger = logging.getLogger(__name__)
 
-BASH_EMOTE         = "<:bash:481893449633890304>"
-BRAINFUCK_EMOTE    = "<:brainfuck:477434846738907137>"
-C_LANG_EMOTE       = "<:clang:481893204111654922>"
+BASH_EMOTE = "<:bash:481893449633890304>"
+BRAINFUCK_EMOTE = "<:brainfuck:477434846738907137>"
+C_LANG_EMOTE = "<:clang:481893204111654922>"
 COFFEESCRIPT_EMOTE = "<:coffeescript:481895170783313920>"
-CPP_EMOTE          = "<:cpp:477434843219755008>"
-CSHARP_EMOTE       = "<:csharp:477433027010756608>"
-DART_EMOTE         = "<:dartlang:481897509887934476>"
-ELIXIR_EMOTE       = "<:elixir:481896314175750146>"
-GOLANG_EMOTE       = "<:go:476742208045711362>"
-HASKELL_EMOTE      = "<:haskell:481894936279515136>"
-JAVA_EMOTE         = "<:java:380372941616971777>"
-KOTLIN_EMOTE       = "<:kotlin:477434839071457282>"
-LUA_EMOTE          = "<:lua:477434841822920714>"
-NODEJS_EMOTE       = "<:nodejs:380374647302258690>"
-PASCAL_EMOTE       = "<:pascal:481894128872062980>"
-PERL_EMOTE         = "<:perl:481894462772215808>"
-PHP_EMOTE          = "<:php:477436804035772416>"
-PYTHON_EMOTE       = "<:py:481154314593763355>"
-RUBY_EMOTE         = "<:ruby:477436800026148865>"
-RUST_EMOTE         = "<:rust:477436806959202324>"
-SCALA_EMOTE        = "<:scala:477436801762590733>"
-SQL_EMOTE          = "<:mysql:477436808704032768>"
-SWIFT_EMOTE        = "<:swift:477436796855255050>"
+CPP_EMOTE = "<:cpp:477434843219755008>"
+CSHARP_EMOTE = "<:csharp:477433027010756608>"
+DART_EMOTE = "<:dartlang:481897509887934476>"
+ELIXIR_EMOTE = "<:elixir:481896314175750146>"
+GOLANG_EMOTE = "<:go:476742208045711362>"
+HASKELL_EMOTE = "<:haskell:481894936279515136>"
+JAVA_EMOTE = "<:java:380372941616971777>"
+KOTLIN_EMOTE = "<:kotlin:477434839071457282>"
+LUA_EMOTE = "<:lua:477434841822920714>"
+NODEJS_EMOTE = "<:nodejs:380374647302258690>"
+PASCAL_EMOTE = "<:pascal:481894128872062980>"
+PERL_EMOTE = "<:perl:481894462772215808>"
+PHP_EMOTE = "<:php:477436804035772416>"
+PYTHON_EMOTE = "<:py:481154314593763355>"
+RUBY_EMOTE = "<:ruby:477436800026148865>"
+RUST_EMOTE = "<:rust:477436806959202324>"
+SCALA_EMOTE = "<:scala:477436801762590733>"
+SQL_EMOTE = "<:mysql:477436808704032768>"
+SWIFT_EMOTE = "<:swift:477436796855255050>"
 
 
 class Evaluate(jdoodle.JDoodle):
@@ -39,34 +40,34 @@ class Evaluate(jdoodle.JDoodle):
         self.bot = bot
 
         self.languages = {
-            "bash":         ("bash", 2, BASH_EMOTE),
-            "sh":           ("bash", 2, BASH_EMOTE),
-            "brainfuck":    ("brainfuck", 0, BRAINFUCK_EMOTE),
-            "bf":           ("brainfuck", 0, BRAINFUCK_EMOTE),
-            "c":            ("c", 3, C_LANG_EMOTE),
+            "bash": ("bash", 2, BASH_EMOTE),
+            "sh": ("bash", 2, BASH_EMOTE),
+            "brainfuck": ("brainfuck", 0, BRAINFUCK_EMOTE),
+            "bf": ("brainfuck", 0, BRAINFUCK_EMOTE),
+            "c": ("c", 3, C_LANG_EMOTE),
             "coffeescript": ("coffeescript", 2, COFFEESCRIPT_EMOTE),
-            "cpp":          ("cpp14", 2, CPP_EMOTE),
-            "cs":           ("csharp", 2, CSHARP_EMOTE),
-            "dart":         ("dart", 2, DART_EMOTE),
-            "elixir":       ("elixir", 2, ELIXIR_EMOTE),
-            "golang":       ("go", 2, GOLANG_EMOTE),
-            "go":           ("go", 2, GOLANG_EMOTE),
-            "hs":           ("haskell", 2, HASKELL_EMOTE),
-            "java":         ("java", 2, JAVA_EMOTE),
-            "kotlin":       ("kotlin", 1, KOTLIN_EMOTE),
-            "lua":          ("lua", 1, LUA_EMOTE),
-            "javascript":   ("nodejs", 2, NODEJS_EMOTE),
-            "js":           ("nodejs", 2, NODEJS_EMOTE),
-            "pascal":       ("pascal", 2, PASCAL_EMOTE),
-            "perl":         ("perl", 2, PERL_EMOTE),
-            "php":          ("php", 2, PHP_EMOTE),
-            "python":       ("python3", 2, PYTHON_EMOTE),
-            "py":           ("python3", 2, PYTHON_EMOTE),
-            "ruby":         ("ruby", 2, RUBY_EMOTE),
-            "rust":         ("rust", 2, RUST_EMOTE),
-            "scala":        ("scala", 2, SCALA_EMOTE),
-            "sql":          ("sql", 2, SQL_EMOTE),
-            "swift":        ("swift", 2, SWIFT_EMOTE),
+            "cpp": ("cpp14", 2, CPP_EMOTE),
+            "cs": ("csharp", 2, CSHARP_EMOTE),
+            "dart": ("dart", 2, DART_EMOTE),
+            "elixir": ("elixir", 2, ELIXIR_EMOTE),
+            "golang": ("go", 2, GOLANG_EMOTE),
+            "go": ("go", 2, GOLANG_EMOTE),
+            "hs": ("haskell", 2, HASKELL_EMOTE),
+            "java": ("java", 2, JAVA_EMOTE),
+            "kotlin": ("kotlin", 1, KOTLIN_EMOTE),
+            "lua": ("lua", 1, LUA_EMOTE),
+            "javascript": ("nodejs", 2, NODEJS_EMOTE),
+            "js": ("nodejs", 2, NODEJS_EMOTE),
+            "pascal": ("pascal", 2, PASCAL_EMOTE),
+            "perl": ("perl", 2, PERL_EMOTE),
+            "php": ("php", 2, PHP_EMOTE),
+            "python": ("python3", 2, PYTHON_EMOTE),
+            "py": ("python3", 2, PYTHON_EMOTE),
+            "ruby": ("ruby", 2, RUBY_EMOTE),
+            "rust": ("rust", 2, RUST_EMOTE),
+            "scala": ("scala", 2, SCALA_EMOTE),
+            "sql": ("sql", 2, SQL_EMOTE),
+            "swift": ("swift", 2, SWIFT_EMOTE),
         }
 
     @staticmethod
@@ -99,6 +100,30 @@ class Evaluate(jdoodle.JDoodle):
             to_eval = base_code[1:-1]
 
             return [language, to_eval]
+
+    @staticmethod
+    def get_color(calls):
+        """(10-0)/(200-0)*(1-0)+0 Term to map the number"""
+        res = (calls - 0) / (200 - 0) * (1 - 0) + 0
+        if res > 0.5:
+            return discord.Colour.from_rgb(255, round(255 * res), 0)
+        else:
+            return discord.Colour.from_rgb(round(255 * res), 255, 0)
+
+    @commands.command("calls")
+    @commands.is_owner()
+    async def _check_used_calls(self, ctx):
+        calls = await super()._credit_spent()
+        embed = discord.Embed(
+            title="JDoodle API calls",
+            description=f"The bot made **{calls}** request, there are **{200-calls}** calls remaining!",
+            color=Evaluate.get_color(calls)
+        )
+        embed.set_footer(
+            text=time.strftime("%H:%M:%S"),
+            icon_url=" http://bit.ly/2C9k1io"
+        )
+        await ctx.send(embed=embed)
 
     @commands.command(name="execute", aliases=["exec"])
     @commands.cooldown(1, 60.0, commands.BucketType.user)
