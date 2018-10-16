@@ -47,10 +47,10 @@ class DiscordPy:
         suggestions = []
         pattern = ".*?".join(map(re.escape, text))
         regex = re.compile(pattern, flags=re.IGNORECASE)
-        for key, val in collection.items():
-            r = regex.search(key)
-            if r:
-                suggestions.append((len(r.group()), r.start(), (key, val)))
+        for key, val in collection:
+            result = regex.search(key)
+            if result:
+                suggestions.append((len(result.group()), result.start(), (key, val)))
 
         suggestions.sort(key=lambda tup: (tup[0], tup[1], tup[2][0]))
         gen_output = (z for _, _, z in suggestions)
