@@ -1,7 +1,13 @@
 git+https://github.com/Rapptz/discord.py@rewrite#egg=discord.py
-aiohttp
+
 asyncpg
-psutil
+click
+emoji>=0.5
+lru_dict
 lxml
+more-itertools>=4.0
+parsedatetime
+pillow
+psutil
+python-dateutil
 uvloop
-pylava

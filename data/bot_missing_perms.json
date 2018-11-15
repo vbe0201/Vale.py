@@ -1,0 +1,12 @@
+{
+    "clear": "delete messages",
+    "help": "send help",
+    "Help": "send Help",
+    "massban": "ban a bunch of people",
+    "mute": "mute people",
+    "slowmode": "slow people down",
+    "slowmode noimmune": "slow people down",
+    "softban": "softly ban people",
+    "sudoku": "play Sudoku",
+    "tempban": "temporarily ban people"
+}

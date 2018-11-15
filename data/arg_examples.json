@@ -1,0 +1,47 @@
+{
+    "alias_examples": [
+        ["pleh", "help"],
+        ["superban", "ban"],
+        ["shipwaifu", "excuse me wtf"]
+    ],
+    "jdoodle_eval": [
+      "```py\nprint('Hi!')\n```"
+    ],
+    "rust": "```rust\nfn main() {\n    let x = 5;\n    println!(\"{}\", x);\n}```",
+    "eval.code": "return 1 + 1",
+    "eval.body": "print('Hello world!')",
+    "reason": [
+        "he did a bad",
+        "ads",
+        "Your behaviour is toxic.",
+        "Shitposting",
+        "Asked for it",
+        "Spam",
+        "Advertising"
+    ],
+    "remind.message": [
+        "do the dishes",
+        "be productive ffs",
+        "refactor this shitty code",
+        "do a thing",
+        "unmute someone"
+    ],
+    "shell.command": [
+        "echo \"Hello world!\"",
+        "wall Nigga, what?!!"
+    ],
+    "sql.query": "SELECT * FROM table",
+    "tag_examples": [
+        ["super cool necessary tag", "ok"],
+        ["shitcode dump", "https://github.com/itsVale"],
+        ["yt bot tutorial", "https://www.youtube.com/watch?v=XfR9iY5y94s"],
+        ["code for free nitro", "WtkPTmE"],
+        ["rules", "This is a christian server. No swearing in here!"]
+    ],
+    "tag search.name": [
+        "help",
+        "send help",
+        "free money",
+        "free hoster"
+    ]
+}
