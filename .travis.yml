@@ -12,6 +12,7 @@ matrix:
       sudo: true
 
 install:
+  - pip install -U pylava
   - pip install -U -r requirements.txt
 
 script:
