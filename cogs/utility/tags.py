@@ -327,7 +327,7 @@ class Tags:
         await pages.interact()
 
     @_tag.command(name='from', aliases=['by'])
-    async def _tag_from(self, ctx, *, member: discord.Member=None):
+    async def _tag_from(self, ctx, *, member: discord.Member = None):
         """Shows all tags created by a given member.
 
         If no member is provided, defaults to the person who invoked the command.
