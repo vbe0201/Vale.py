@@ -417,7 +417,7 @@ class ModLog:
     # And finally the commands
 
     @commands.group(name='case', invoke_without_command=True)
-    async def _case(self, ctx, num: CaseNumber=None):
+    async def _case(self, ctx, num: CaseNumber = None):
         """Group for all case searching commands. If given a number, it retrieves the case with the given number.
 
         If no number is given, it shows the latest case.
@@ -521,7 +521,7 @@ class ModLog:
 
     @commands.group(name='modlog', invoke_without_command=True)
     @commands.has_permissions(manage_guild=True)
-    async def _modlog(self, ctx, enable: bool=None):
+    async def _modlog(self, ctx, enable: bool = None):
         """Sets whether or not I should log moderation actions at all.
 
         If no arguments are given, the basic configuration info will be shown.

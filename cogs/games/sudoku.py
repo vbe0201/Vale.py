@@ -610,7 +610,7 @@ class Sudoku:
     @commands.command(name='sudoku')
     @commands.bot_has_permissions(embed_links=True)
     @money_required(50)
-    async def _sudoku(self, ctx, difficulty: Difficulty=None):
+    async def _sudoku(self, ctx, difficulty: Difficulty = None):
         """Starts a new Sudoku game.
 
         You can optionally provide a difficulty or just use `{prefix}sudoku` and choose afterwards.

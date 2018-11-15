@@ -279,7 +279,7 @@ class Moderation:
     @commands.group(name='slowmode', invoke_without_command=True)
     @commands.has_permissions(manage_messages=True)
     @commands.bot_has_permissions(manage_messages=True)
-    async def _slowmode(self, ctx, duration: time.Delta, *, member: discord.Member=None):
+    async def _slowmode(self, ctx, duration: time.Delta, *, member: discord.Member = None):
         """Activates the slowmode.
 
         If a member is given as an argument, it puts only the member in slowmode on the whole server,
@@ -316,7 +316,7 @@ class Moderation:
     @_slowmode.command(name='noimmune')
     @commands.has_permissions(manage_messages=True)
     @commands.bot_has_permissions(manage_messages=True)
-    async def _slowmode_no_immune(self, ctx, duration: time.Delta, *, member: discord.Member=None):
+    async def _slowmode_no_immune(self, ctx, duration: time.Delta, *, member: discord.Member = None):
         """Puts the channel or member in "noimmune" slowmode.
 
         Unlike `{prefix}slowmode`, no one is immune to this slowmode, even those with Manage Server permissions.
@@ -335,7 +335,7 @@ class Moderation:
         await ctx.send(f'{member.mention} is now in **noimmune** slowmode. {pronoun} must wait {duration} after each message they send.')
 
     @_slowmode.command(name='off')
-    async def _slowmode_off(self, ctx, *, member: discord.Member=None):
+    async def _slowmode_off(self, ctx, *, member: discord.Member = None):
         """Turns off the slowmode for either a member or a channel."""
 
         member = member or ctx.channel
@@ -351,7 +351,7 @@ class Moderation:
 
     @commands.command(name='newusers', aliases=['newmembers', 'joined'])
     @commands.guild_only()
-    async def _new_users(self, ctx, *, count: int=5):
+    async def _new_users(self, ctx, *, count: int = 5):
         """Tells you the recently joined members on this server.
 
         The minimum is 3 members. If no number is given, I will show the last 5 members that joined.
@@ -540,7 +540,7 @@ class Moderation:
 
     @commands.command(name='warns')
     @commands.has_permissions(manage_guild=True)
-    async def _warns(self, ctx, *, member: discord.Member=None):
+    async def _warns(self, ctx, *, member: discord.Member = None):
         """Shows a given user's warns on this server.
 
         If no user is given, this command shows all warned users on this server.
@@ -734,7 +734,7 @@ class Moderation:
     @commands.command(name='mute')
     @commands.has_permissions(manage_guild=True)
     @commands.bot_has_permissions(manage_roles=True)
-    async def _mute(self, ctx, member: CheckedMember, duration: typing.Optional[time.Delta]=None, *, reason: Reason=None):
+    async def _mute(self, ctx, member: CheckedMember, duration: typing.Optional[time.Delta] = None, *, reason: Reason = None):
         """Mutes a user for an optional amount of time."""
 
         reason = reason or f'By {ctx.author}'
@@ -780,7 +780,7 @@ class Moderation:
             ctx.__bypass_local_error__ = True
 
     @commands.command(name='mutetime')
-    async def _mute_time(self, ctx, member: discord.Member=None):
+    async def _mute_time(self, ctx, member: discord.Member = None):
         """Shows the time left for a member's mute. Defaults to yourself."""
 
         member = member or ctx.author
@@ -833,7 +833,7 @@ class Moderation:
     @commands.command(name='unmute')
     @commands.has_permissions(manage_guild=True)
     @commands.bot_has_permissions(manage_roles=True)
-    async def unmute(self, ctx, member: discord.Member, *, reason: Reason=None):
+    async def unmute(self, ctx, member: discord.Member, *, reason: Reason = None):
         """Unmutes a user."""
 
         reason = reason or f'Unmute by {ctx.author}'
@@ -857,7 +857,7 @@ class Moderation:
     @commands.command(name='kick')
     @commands.has_permissions(kick_members=True)
     @commands.bot_has_permissions(kick_members=True)
-    async def _kick(self, ctx, member: CheckedMember, *, reason: Reason=None):
+    async def _kick(self, ctx, member: CheckedMember, *, reason: Reason = None):
         """Kicks a user."""
 
         reason = reason or f'By {ctx.author}'
@@ -867,7 +867,7 @@ class Moderation:
     @commands.command(name='softban')
     @commands.has_permissions(kick_members=True, manage_guild=True)
     @commands.bot_has_permissions(ban_members=True)
-    async def _soft_ban(self, ctx, member: CheckedMember, *, reason: Reason=None):
+    async def _soft_ban(self, ctx, member: CheckedMember, *, reason: Reason = None):
         """Softbans a user."""
 
         reason = reason or f'By {ctx.author}'
@@ -878,7 +878,7 @@ class Moderation:
     @commands.command(name='tempban')
     @commands.has_permissions(ban_members=True)
     @commands.bot_has_permissions(ban_members=True)
-    async def _temp_ban(self, ctx, member: CheckedMember, duration: time.Delta, reason: Reason=None):
+    async def _temp_ban(self, ctx, member: CheckedMember, duration: time.Delta, reason: Reason = None):
         """Temporarily bans a user."""
 
         reason = reason or f'By {ctx.author}'
@@ -890,7 +890,7 @@ class Moderation:
     @commands.command(name='ban')
     @commands.has_permissions(ban_members=True)
     @commands.bot_has_permissions(ban_members=True)
-    async def _ban(self, ctx, member: CheckedMemberID, *, reason: Reason=None):
+    async def _ban(self, ctx, member: CheckedMemberID, *, reason: Reason = None):
         """Bans a member.
 
         You can use this to ban someone even if he's not in the server, just use the ID.
@@ -903,7 +903,7 @@ class Moderation:
     @commands.command(name='unban')
     @commands.has_permissions(ban_members=True)
     @commands.bot_has_permissions(ban_members=True)
-    async def _unban(self, ctx, user: BannedMember, *, reason: Reason=None):
+    async def _unban(self, ctx, user: BannedMember, *, reason: Reason = None):
         """Unbans the user."""
 
         reason = reason or f'By {ctx.author}'
@@ -913,7 +913,7 @@ class Moderation:
 
     @commands.command(name='massban')
     @commands.has_permissions(ban_members=True)
-    async def _mass_ban(self, ctx, members: commands.Greedy[_CheckedMember], delete_days: typing.Optional[int]=0, *, reason: Reason):
+    async def _mass_ban(self, ctx, members: commands.Greedy[_CheckedMember], delete_days: typing.Optional[int] = 0, *, reason: Reason):
         """Bans multiple users from the server.
         """
 

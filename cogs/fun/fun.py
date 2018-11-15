@@ -150,7 +150,7 @@ class Fun(IdiotClient):
         return discord.File(result.data, 'greeting.png')
 
     @commands.command(name='osu')
-    async def _osu(self, ctx, theme: typing.Optional[int]=3, *, user: str=None):
+    async def _osu(self, ctx, theme: typing.Optional[int] = 3, *, user: str = None):
         """Returns an osu profile card for a given user.
 
         You can choose a theme by providing a number. Defaults to `darker`.
