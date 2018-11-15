@@ -356,7 +356,7 @@ async def _help_general(ctx):
 def help_command(func=lambda s: s, **kwargs):
     """Creates a help command with a given transformation function."""
 
-    async def command(_, ctx, *, command: _HelpCommand=None):
+    async def command(_, ctx, *, command: _HelpCommand = None):
         if command is None:
             await _help_general(ctx)
         else:

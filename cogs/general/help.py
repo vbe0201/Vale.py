@@ -43,7 +43,7 @@ class Help:
             await ctx.send(content)
 
     @commands.command(name='commands', aliases=['cmds'])
-    async def _commands(self, ctx, *, category: Category=None):
+    async def _commands(self, ctx, *, category: Category = None):
         """Shows all commands in a given category.
 
         If no category is provided, this lists all commands.

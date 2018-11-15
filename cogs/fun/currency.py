@@ -214,7 +214,7 @@ class Currency:
         await connection.execute(query, user_id, amount)
 
     @commands.command(name='cash', aliases=['money', 'coins'])
-    async def _cash(self, ctx, user: discord.Member=None):
+    async def _cash(self, ctx, user: discord.Member = None):
         """Shows how much money you have."""
 
         user = user or ctx.author
@@ -349,7 +349,7 @@ class Currency:
 
     @commands.command(name='flip')
     @commands.bot_has_permissions(embed_links=True, attach_files=True)
-    async def _flip(self, ctx, side_or_number: SideOrAmount=None, amount: PositiveIntOnlyOnSide=None):
+    async def _flip(self, ctx, side_or_number: SideOrAmount = None, amount: PositiveIntOnlyOnSide = None):
         """Flips a coin.
 
         The first argument can either be the side (heads or tails) or the number of coins you want to flip.

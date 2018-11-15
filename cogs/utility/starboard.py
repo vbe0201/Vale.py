@@ -309,19 +309,13 @@ class StarBoard:
     async def _star_message(self, channel, message_id, starrer_id, *, connection):
         """Stars a message."""
 
-        print("yes")
-
         guild_id = channel.guild.id
         starboard = await self.get_starboard(guild_id)
         if not starboard.channel:
             raise StarBoardError('\N{WARNING SIGN} Starboard channel not found.')
 
-        print("Hmmm")
-
         if starboard.locked:
             raise StarBoardError('\N{WARNING SIGN} Starboard is locked.')
-
-        print('here')
 
         if channel.id == starboard.channel.id:
             query = 'SELECT channel_id, message_id FROM starboard_entries WHERE bot_message_id = $1;'
@@ -348,8 +342,6 @@ class StarBoard:
         oldest_allowed = datetime.datetime.utcnow() - starboard.max_age
         if msg.created_at < oldest_allowed:
             raise StarBoardError('\N{NO ENTRY SIGN} This message is too old.')
-
-        print("Thonk")
 
         # Ew shit. Fuckery incoming
         query = """
@@ -382,8 +374,6 @@ class StarBoard:
 
         query = 'SELECT COUNT(*) FROM starrers WHERE entry_id = $1;'
         record = await connection.fetchrow(query, entry_id)
-
-        print("Me here")
 
         count = record[0]
         if count < starboard.threshold:
@@ -488,7 +478,7 @@ class StarBoard:
     @commands.guild_only()
     @commands.has_permissions(manage_guild=True)
     @commands.bot_has_permissions(manage_roles=True, manage_channels=True)
-    async def _starboard(self, ctx, *, name_or_channel: typing.Union[discord.TextChannel, str]='starboard'):
+    async def _starboard(self, ctx, *, name_or_channel: typing.Union[discord.TextChannel, str] = 'starboard'):
         """Sets up the starboard for this server.
 
         You can either reference an existing channel by mentioning it like `{prefix}starboard #channel`.
@@ -1017,7 +1007,7 @@ class StarBoard:
 
     @_star.command(name='stats')
     @requires_starboard()
-    async def _star_stats(self, ctx, *, member: discord.Member=None):
+    async def _star_stats(self, ctx, *, member: discord.Member = None):
         """Shows statistics on the starboard usage of the server or a member."""
 
         if not member:

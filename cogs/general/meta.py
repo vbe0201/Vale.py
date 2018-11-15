@@ -132,7 +132,7 @@ class Meta:
         await ctx.send(embed=embed)
 
     @commands.command(name='source', aliases=['skid', 'steal'])
-    async def _source(self, ctx, *, command: BotCommand=None):
+    async def _source(self, ctx, *, command: BotCommand = None):
         """Displays the source code for a command.
 
         If the source code has too many lines, it will send a GitHub URL instead.
