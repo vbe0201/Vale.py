@@ -6,6 +6,7 @@
   <a href="#"><img src="https://user-images.githubusercontent.com/38182450/43689793-c45cbea2-98ff-11e8-828a-53d29f425d9c.png" width="200" /></a> &nbsp;
   <a href="https://discordapp.com/oauth2/authorize?client_id=458286335304794127&scope=bot&permissions=281143415"><img src="https://user-images.githubusercontent.com/38182450/43689573-e7e657aa-98fc-11e8-84a4-38d99df2dade.png" width="200" /></a><br><br>
   <a class="badge-ci-passing" href="https://travis-ci.com/itsVale/Vale.py"><img src="https://travis-ci.com/itsVale/Vale.py.svg?branch=master" /></a>
+  <a href="https://codeclimate.com/github/itsVale/Vale.py/maintainability"><img src="https://api.codeclimate.com/v1/badges/31d858820986fa7b3a34/maintainability" /></a>
   <a class="badge-align" href="https://www.codacy.com/app/itsVale/Vale.py?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=itsVale/Vale.py&amp;utm_campaign=Badge_Grade"><img src="https://api.codacy.com/project/badge/Grade/cf549d36684740199c1a98f33f57f415"/></a>
 </div>
 
