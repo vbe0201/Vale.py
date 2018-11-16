@@ -58,4 +58,4 @@ async def init_database():
 
 
 if __name__ == '__main__':
-    sys.exit(root(False, False))
+    sys.exit(root())
