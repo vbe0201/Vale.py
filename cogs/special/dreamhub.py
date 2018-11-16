@@ -14,7 +14,7 @@ class DreamhubExclusive:
         self.bot = bot
 
         cog = self.bot.get_cog('Fun')
-        self.get_image = cog.get_greeting
+        self.get_image = cog.retrieve_greeting
 
     def __local_check(self, ctx):
         # For future reference if any special commands will be implemented.

@@ -157,8 +157,8 @@ class TwoPlayerGameCog:
 
             name = name[6:]
 
-            help = inspect.getdoc(member).format(name=cls.name, cmd=cmd_name)
-            command = gc(name=name, help=help)(member)
+            game_help = inspect.getdoc(member).format(name=cls.name, cmd=cmd_name)
+            command = gc(name=name, help=game_help)(member)
             setattr(cls, f'{cmd_name}_{name}', command)
 
         setattr(cls, f'_{cls.__name__}__error', cls._error)

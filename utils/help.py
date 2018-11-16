@@ -159,10 +159,10 @@ class CogPages(Paginator):
 
         return self
 
-    def create_embed(self, entries):
+    def create_embed(self, page):
         return (discord.Embed(description=self._cog_doc, color=self.color)
                 .set_author(name=self._cog_name)
-                .add_field(name='Commands:', value='\n'.join(entries) + f'\n\n{CROSSED_NOTE}')
+                .add_field(name='Commands:', value='\n'.join(page) + f'\n\n{CROSSED_NOTE}')
                 .set_footer(text=f'Currently on page {self._index + 1}')
                 )
 

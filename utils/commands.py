@@ -36,5 +36,5 @@ def all_qualified_names(command):
 def command_category(command, default='\u200bOther'):
     """Return the category that a command would fall into, using the module the command was defined in."""
 
-    cogs, category, *rest = command.module.split('.', 2)
+    _, category, *rest = command.module.split('.', 2)
     return category if rest else default
