@@ -263,8 +263,8 @@ class CheckersSession(TwoPlayerSession, move_pattern=_VALID_MOVE_REGEX, board_fa
     def current(self):
         return self._players[self._board.turn]
 
-    def _push_move(self, match):
-        self._board.move(match[0])
+    def _push_move(self, move):
+        self._board.move(move[0])
 
     def _is_game_over(self):
         return self._board.is_game_over()

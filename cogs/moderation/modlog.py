@@ -513,7 +513,7 @@ class ModLog:
         flags = ', '.join(flag.name for flag in ActionFlag if config.events & flag)
 
         count = await _get_number_of_cases(ctx.db, ctx.guild.id)
-        embed = (discord.Embed(description=f'I have made {count} cases so far.', color=random_color())
+        embed = (discord.Embed(description=f'I have made {count} cases so far.', color=color)
                  .set_author(name=f'In {ctx.guild}, I {will} be logging mod actions.')
                  .add_field(name='Logging Channel:', value=f'<#{config.channel_id}>')
                  .add_field(name='Actions that will be logged:', value=flags, inline=False))

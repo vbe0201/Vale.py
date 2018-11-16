@@ -53,10 +53,10 @@ def _make_board(m=3):
                 board[i][j] = x
                 if c + 1 >= nn or search(c + 1):
                     return board
-        else:
-            # No number valid in this cell: backtrack and try again
-            board[i][j] = None
-            return None
+
+        # No number valid in this cell: backtrack and try again
+        board[i][j] = None
+        return None
 
     return search()
 
@@ -535,7 +535,7 @@ class SudokuSession(InteractiveSession):
         await asyncio.sleep(5)
         await super().cleanup(delete_after=delete_after)
 
-    async def run(self):
+    async def run(self, **kwargs):
         with self._bot.temp_listener(self.on_message):
             timeout = 300 * (self._board.difficulty + 1) / 2
             await super().run(timeout=timeout)

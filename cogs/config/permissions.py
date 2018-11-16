@@ -8,7 +8,6 @@ from discord.ext import commands
 from more_itertools import partition
 
 from utils import cache, db, disambiguate, formats
-from utils.colors import random_color
 from utils.commands import command_category, walk_parents
 from utils.converter import BotCommand, Category
 from utils.misc import emoji_url, truncate, unique
@@ -113,7 +112,7 @@ class CommandCategoryOrAll(commands.Converter):
             try:
                 return await ctx.command.do_conversion(ctx, _type, argument), name
             except Exception:  # muh pycodestyle
-                continue
+                pass
 
         raise commands.BadArgument(f'{argument} is not a command or a category.')
 
@@ -326,7 +325,7 @@ class Permissions:
                 yield name, value
 
         if ctx.bot_has_embed_links():
-            embed = (discord.Embed(color=random_color())
+            embed = (discord.Embed(color=color)
                      .set_author(name=f'{_type} {action}!', icon_url=icon))
 
             if name not in {ALL_COMMANDS_KEY, None}:
@@ -430,7 +429,7 @@ class Permissions:
                 yield name, value
 
         if ctx.bot_has_embed_links():
-            embed = (discord.Embed(color=random_color())
+            embed = (discord.Embed(color=color)
                      .set_author(name=f'{action.title()} successful!', icon_url=PLONK_ICON))
 
             for name, value in name_values():

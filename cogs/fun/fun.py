@@ -128,7 +128,7 @@ class Fun(IdiotClient):
         if isinstance(error, IdiotError):
             await ctx.send(error)
 
-    async def get_greeting(self, type, version, bot, avatar, username, discriminator, guild_name, member_count, *, message=None):
+    async def retrieve_greeting(self, type, version, bot, avatar, username, discriminator, guild_name, member_count, *, message=None):
         """This represents the base for Welcome/Goodbye messages."""
 
         result = await self._get_image(
