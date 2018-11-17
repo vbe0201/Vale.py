@@ -10,6 +10,7 @@ from discord.ext import commands
 from more_itertools import flatten, grouper, sliced
 
 from .base import money_required
+from .errors import NotEnoughMoney
 
 from utils import db
 from utils.colors import random_color
@@ -596,6 +597,10 @@ class Sudoku:
     def __init__(self, bot):
         self.bot = bot
         self.sessions = {}
+
+    async def __error(self, ctx, error):
+        if isinstance(error, NotEnoughMoney):
+            await ctx.send(error)
 
     async def _get_difficulty(self, ctx):
         menu = SudokuMenu(ctx)
