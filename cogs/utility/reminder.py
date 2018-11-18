@@ -57,14 +57,15 @@ class Reminder:
         You can't cancel reminders that you've set to go off in 30 seconds or less.
         """
 
-        query = """SELECT id, expires, args_kwargs
-                   FROM scheduler
-                   WHERE event = 'reminder_complete'
-                   AND args_kwargs #>> '{args,0}' = $1
-                   ORDER BY expires
-                   OFFSET $2
-                   LIMIT 1;
-                """
+        query = """
+            SELECT   id, expires, args_kwargs
+            FROM     scheduler
+            WHERE    event = 'reminder_complete'
+            AND      args_kwargs #>> '{args,0}' = $1
+            ORDER BY expires
+            OFFSET   $2
+            LIMIT    1;
+        """
 
         entry = await ctx.db.fetchrow(query, str(ctx.author.id), index - 1)
         if entry is None:
@@ -92,12 +93,13 @@ class Reminder:
         Reminder that you've set to go off in 30 seconds or less will not be shown, however.
         """
 
-        query = """SELECT expires, args_kwargs #>> '{args,1}', args_kwargs #>> '{args,2}'
-                   FROM scheduler
-                   WHERE event = 'reminder_complete'
-                   AND args_kwargs #>> '{args,0}' = $1
-                   ORDER BY expires;
-                """
+        query = """
+            SELECT   expires, args_kwargs #>> '{args,1}', args_kwargs #>> '{args,2}'
+            FROM     scheduler
+            WHERE    event = 'reminder_complete'
+            AND      args_kwargs #>> '{args,0}' = $1
+            ORDER BY expires;
+        """
         reminders = await ctx.db.fetch(query, str(ctx.author.id))
 
         if not reminders:
