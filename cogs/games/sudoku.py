@@ -598,7 +598,7 @@ class Sudoku:
         self.bot = bot
         self.sessions = {}
 
-    async def __error(self, ctx, error):
+    async def on_command_error(self, ctx, error):
         if isinstance(error, NotEnoughMoney):
             await ctx.send(error)
 
