@@ -9,7 +9,7 @@ async def run_subprocess(cmd, loop=None):
     except NotImplementedError:
         with subprocess.Popen(cmd, stdout=subprocess.PIPE, stderr=subprocess.PIPE, shell=True) as process:
             try:
-                result = await loop.run_in_executor(None, process.communicate())
+                result = await loop.run_in_executor(None, process.communicate)
             except Exception:  # muh pycodestyle
                 def kill():
                     process.kill()
