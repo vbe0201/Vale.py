@@ -12,6 +12,7 @@ from utils import db
 from utils.colors import random_color
 from utils.examples import get_example, wrap_example
 from utils.formats import pluralize
+from utils.misc import run_in_executor
 from utils.time import duration_units
 
 
@@ -303,6 +304,7 @@ class Currency:
 
         await ctx.send(file=file, embed=embed)
 
+    @run_in_executor
     def _flip_image(self, num_sides):
         images = {
             Side.heads: self._heads_image,
@@ -339,7 +341,7 @@ class Currency:
         elif number <= 0:
             await ctx.send('Wtf, how is that supposed to work?')
         else:
-            message, file = await self.bot.loop.run_in_executor(None, self._flip_image, number)
+            message, file = await self._flip_image(number)
 
             embed = (discord.Embed(title=f'...Flipped {message}', color=random_color())
                      .set_author(name=ctx.author.display_name, icon_url=ctx.author.avatar_url)

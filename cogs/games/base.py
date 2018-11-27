@@ -15,27 +15,20 @@ from utils.colors import random_color
 from utils.context_managers import temporary_item, temporary_message
 
 
-def money_required(amount: int):
-    """A decorator that will be used as an extension to the Currency cog.
+async def money_required(ctx, amount: int):
+    """A check that will be used as an extension to the Currency cog.
 
     Players need, depending on the game, a given amount of money to be able to join/create one.
     Creating games is more expensive than joining them. And the more big the games are, the higher the price to enjoy them.
     """
 
-    async def predicate(ctx):
-        if not ctx.guild:
-            return False
+    cog = ctx.bot.get_cog('Currency')
+    money = await cog.get_money(ctx.author.id)
 
-        cog = ctx.bot.get_cog('Currency')
-        money = await cog.get_money(ctx.author.id)
+    if money < amount:
+        raise NotEnoughMoney(money, amount)
 
-        if money < amount:
-            raise NotEnoughMoney(money, amount)
-
-        await cog.add_money(ctx.author.id, -amount)
-        return True
-
-    return commands.check(predicate)
+    await cog.add_money(ctx.author.id, -amount)
 
 
 class Status(enum.Enum):

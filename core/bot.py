@@ -13,6 +13,7 @@ from datetime import datetime
 
 import aiohttp
 import discord
+import psutil
 from discord.ext import commands
 
 from . import context
@@ -169,6 +170,7 @@ class ValePy(commands.AutoShardedBot):
         self.session = aiohttp.ClientSession(loop=self.loop)
         self.launch = datetime.utcnow()
         self.pool = self.loop.run_until_complete(db.create_pool(config))
+        self.process = psutil.Process(os.getpid())
 
         self.db_scheduler = DatabaseScheduler(self.pool, timefunc=datetime.utcnow)
         self.db_scheduler.add_callback(self._dispatch_from_scheduler)
@@ -252,15 +254,15 @@ class ValePy(commands.AutoShardedBot):
         if not path:
             return None
 
-        return (name for _, name, is_pkg in pkgutil.iter_modules(path, spec.name + '.')
-                if not is_pkg and name not in {'cogs.games.base', 'cogs.games.errors'})
+        return (name for info, name, is_pkg in pkgutil.iter_modules(path, spec.name + '.')
+                if not is_pkg)
 
     def load_extension(self, name):
         modules = self.search_extensions(name)
         if not modules:
             return super().load_extension(name)
 
-        with contextlib.suppress(discord.HTTPException):
+        with contextlib.suppress(discord.ClientException):
             for name in modules:
                 super().load_extension(name)
 
@@ -417,10 +419,6 @@ class ValePy(commands.AutoShardedBot):
         except Exception as e:
             await ctx.command.dispatch_error(ctx, e)
 
-    # The following stuff is just here because of discord.py's caching.
-    # The thing is that getting the len of guilds, users or voice clients will add them to the internal cache.
-    # This is a way to avoid this, since getting the len can cause massive impacts on the bot's performance later on.
-
     def guilds_view(self):
         return self._connection._guilds.values()
 
@@ -460,6 +458,10 @@ class ValePy(commands.AutoShardedBot):
     @property
     def source(self):
         return f'https://github.com/itsVale/Vale.py'
+
+    @property
+    def support_server(self):
+        return 'https://discord.gg/6cbxXVm'
 
     @discord.utils.cached_property
     def minimal_invite_url(self):
