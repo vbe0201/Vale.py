@@ -259,7 +259,7 @@ class Owner:
         await ctx.send('Gimme a second.')
 
         try:
-            process = psutil.Process(os.getpid())
+            process = self.bot.process
             for handler in process.open_files() + process.connections():
                 os.close(handler.fd)
         except Exception as e:

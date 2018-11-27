@@ -73,10 +73,11 @@ twitch_url = ''
 # Some emotes that are required for the bot's commands.
 
 emoijs = dict(
-    ping_emote='',  # Specify this emote without braces, it will be used to react to messages.
+    ping_emote='',  # Specify this emote without `<>`, it will be used to react to messages.
     success='\u2705',
     failure='\u274C',
     smart='',
+    retard='',
 
     # ---- These emojis will all be used for the bot's about command.
     statistics='',
@@ -90,6 +91,7 @@ emoijs = dict(
     python='',
     discordpy='',
     announcements='',
+    postgres='',
 )
 
 
@@ -102,6 +104,11 @@ jdoodle_client_secret = ''
 
 # Idiotic API
 idiotic_api_key = ''
+
+# -------------------- BOT LIST --------------------
+# API keys for Discord Bot Lists your bot is in.
+
+dbl_key = ''
 
 
 # ------------------- POSTGRESQL -------------------

@@ -13,7 +13,7 @@ _prefixes = list(set(string.punctuation) - {'@', '#'})
 class Prefix(commands.Converter):
     async def convert(self, ctx, argument):
         if not argument:
-            raise commands.BadArgument('You should actually provide a prefix..... :retardreee:')
+            raise commands.BadArgument(f'You should actually provide a prefix..... {ctx.bot.bot_emojis.get("retard")}')
 
         if not argument.strip():
             raise commands.BadArgument('A space isn\'t a prefix you know...')

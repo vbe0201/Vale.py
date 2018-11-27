@@ -59,7 +59,7 @@ def _format_bot_missing_perms(ctx, missing_perms):
 
 
 @_handler(commands.BotMissingPermissions)
-async def bot_missing_perms(ctx, error):
+def bot_missing_perms(ctx, error):
     return ctx.send(_format_bot_missing_perms(ctx, error.missing_perms))
 
 # MissingRequiredArgument

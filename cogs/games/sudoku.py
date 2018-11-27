@@ -598,10 +598,6 @@ class Sudoku:
         self.bot = bot
         self.sessions = {}
 
-    async def __error(self, ctx, error):
-        if isinstance(error, NotEnoughMoney):
-            await ctx.send(error)
-
     async def _get_difficulty(self, ctx):
         menu = SudokuMenu(ctx)
         try:
@@ -614,12 +610,16 @@ class Sudoku:
 
     @commands.command(name='sudoku')
     @commands.bot_has_permissions(embed_links=True)
-    @money_required(50)
     async def _sudoku(self, ctx, difficulty: Difficulty = None):
         """Starts a new Sudoku game.
 
         You can optionally provide a difficulty or just use `{prefix}sudoku` and choose afterwards.
         """
+
+        try:
+            await money_required(ctx, 50)
+        except NotEnoughMoney:
+            return await ctx.send('Hey, hey, hey, you are missing **50** \N{MONEY WITH WINGS}.')
 
         if ctx.author.id in self.sessions:
             return await ctx.send('Please finish your other Sudoku game first.')

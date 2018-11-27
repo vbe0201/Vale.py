@@ -9,6 +9,7 @@ from discord.ext import commands
 
 from utils.colors import random_color
 from utils.converter import BotCommand
+from utils.paginator import Paginator
 
 # Thanks, Milky
 
@@ -102,34 +103,89 @@ class Meta:
     def emojis(self):
         return self.bot.bot_emojis
 
+    @staticmethod
+    async def _get_commits(repo):
+        cmd = r'git show -s HEAD~5..HEAD --format="[{}](https://github.com/' + repo + '/commit/%H) %s (%cr)"'  # 10 commits
+        if os.name == 'posix':
+            cmd = cmd.format(r'\`%h\`')
+        else:
+            cmd = cmd.format(r'`%h`')
+
+        try:
+            revision = os.popen(cmd).read().strip()
+        except OSError:
+            revision = 'Couldn\'t fetch commits. Either a memory error or a non-existant repository was provided.'
+
+        return revision
+
+    @staticmethod
+    def _get_os_information(cpu, memory):
+        return inspect.cleandoc(f"""
+        **System information:**
+
+        ```yaml
+        :Architecture: -{platform.architecture()[0]}-
+
+        :System:       -{platform.system()}-
+        :Node:         -{platform.node()}-
+        :Release:      -{platform.release()}-
+        :Version:      -{platform.version()}-
+        :Machine:      -{platform.version()}-
+        :Processor:    -{platform.processor()}-
+
+        :CPU usage:    -{cpu}-
+        :Memory usage: -{memory}-
+        ```
+        """)
+
     @commands.command(name='about')
     async def _about(self, ctx):
-        """Get some cool information about this bot."""
+        """Get some cool information about the bot."""
 
-        process = psutil.Process(os.getpid())
+        pages = []
+
+        process = self.bot.process
+        cpu = process.cpu_percent() / psutil.cpu_count()
         memory = process.memory_info().rss / float(2 ** 20)
+        latency = round(self.bot.latency * 1000, 2)
+        shards = len(self.bot.shards)
         version = '.'.join(map(str, ctx.bot.version_info[:3]))
-
-        description = (
-            f'[Source Code]({self.bot.source}) | '
-            '[My creator on Twitch](https://twitch.tv/itsvaleee)\n'
-            '━━━━━━━━━━━━━━━━━━━━━━━━\n'
-            f'__[Invite me with minimal perms]({self.bot.minimal_invite_url})__\n'
-            f'__[Invite me with full perms]({self.bot.invite_url})__\n\n'
-            f'{self.emojis.get("version")} Version: **{version}**\n'
-            f'{self.emojis.get("status")} Online for: **{self.bot.uptime}**\n'
-            f'{self.emojis.get("signal")} Latency: **{round(self.bot.latency * 1000)}ms**\n'
-            f'{self.emojis.get("server")} Guilds: **{self.bot.guild_count}**\n'
-            f'{self.emojis.get("cpu")} CPU usage: **{psutil.cpu_percent()}**\n'
-            f'{self.emojis.get("memory")} RAM usage: **{round(memory, 2)}mb**\n'
-            f'{self.emojis.get("shard")} Shard count: **{int(self.bot.shard_count)}**\n'
-            f'{self.emojis.get("python")} Python version: **{platform.python_version()}**\n'
-            f'{self.emojis.get("discordpy")} discord.py version: **{discord.__version__}**\n\n'
-            f'{self.emojis.get("announcements")} Recent updates:\n```css\n{_format_changelog_without_embed(version)}\n```'
+        changelog = (
+            f'**{self.emojis.get("announcements")} Recent updates:**\n\n'
+            f'```css\n{_format_changelog_without_embed(version)}```'
         )
 
-        embed = discord.Embed(title=f'{self.emojis.get("statistics")} {self.bot.user.name}\'s stats', description=description, color=random_color())
-        await ctx.send(embed=embed)
+        commits = await self._get_commits('itsVale/Vale.py')
+        system = self._get_os_information(cpu, memory)
+        python = platform.python_version()
+        postgres = '.'.join(map(str, ctx.db.get_server_version()[:3]))
+
+        pages = [
+            (
+                f'[`Source Code`]({self.bot.source})\n'
+                f'[`Invite me with minimal perms`]({self.bot.minimal_invite_url})\n'
+                f'[`Invite me with full perms (Required for certain commands to work)`]({self.bot.invite_url})\n\n'
+                f'[__**Need help with something? Check out the support server!**__]({self.bot.support_server})'
+            ),
+            (
+                f'{self.emojis.get("version")} Version: **{version}**\n'
+                f'{self.emojis.get("status")} Online for: **{self.bot.uptime}**\n'
+                f'{self.emojis.get("signal")} Latency: **{latency} ms**\n'
+                f'{self.emojis.get("server")} Guilds: **{self.bot.guild_count}**\n'
+                f'{self.emojis.get("cpu")} CPU usage: **{cpu:.2f}%**\n'
+                f'{self.emojis.get("memory")} RAM usage: **{memory:.2f} Mb**\n'
+                f'{self.emojis.get("shard")} Shards: **{shards}**\n'
+                f'{self.emojis.get("python")} Python version: **{python}**\n'
+                f'{self.emojis.get("discordpy")} discord.py version: **{discord.__version__}**\n'
+                f'{self.emojis.get("postgres")} PostgreSQL version: **{postgres}**\n'
+            ),
+            system,
+            f'**\N{WRITING HAND} Latest commits:**\n\n' + commits,
+            changelog
+        ]
+
+        paginator = Paginator(ctx, pages, per_page=1, title=f'{self.emojis.get("statistics")} Stats for Vale.py')
+        await paginator.interact()
 
     @commands.command(name='source', aliases=['skid', 'steal'])
     async def _source(self, ctx, *, command: BotCommand = None):

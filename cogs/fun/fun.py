@@ -173,10 +173,15 @@ class Fun(IdiotClient):
         user = user or ctx.author.display_name
 
         async with ctx.typing():
-            result = await self._get_image(get_dev_endpoint('osu'), user=user, theme=themes[theme - 1])
+            try:
+                result = await self._get_image(get_dev_endpoint('osu'), user=user, theme=themes[theme - 1])
+
+                res = result.data
+            except KeyError:
+                return await ctx.send('Nothing found for the given username.')
 
             with contextlib.suppress(discord.HTTPException):
-                await ctx.send(file=discord.File(result.data, 'osu.png'))
+                await ctx.send(file=discord.File(res, 'osu.png'))
 
     @commands.command(name='lmgtfy', aliases=['google', 'search'])
     async def _lmgtfy(self, ctx, *args):

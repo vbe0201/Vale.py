@@ -1,8 +1,10 @@
 import asyncio
+import functools
 import inspect
 import json
 import os
 from collections import OrderedDict
+from typing import Callable
 
 from more_itertools import grouper
 
@@ -46,6 +48,25 @@ def unique(iterable):
 async def maybe_awaitable(func, *args, **kwargs):
     maybe = func(*args, **kwargs)
     return await maybe if inspect.isawaitable(maybe) else maybe
+
+
+def run_in_executor(func: Callable):
+    """
+    This decorator wraps a synchronous function to be executed using `loop.run_in_executor`.
+    This allows functions to be wrapped into asynchronous functions and to be awaitable.
+    This is to prevent functions that are expensive from blocking the bot's event loop.
+
+    :param func:
+        The synchronous function that should be wrapped.
+    """
+
+    @functools.wraps(func)
+    async def decorator(*args, **kwargs):
+        loop = asyncio.get_event_loop()
+        partial = functools.partial(func, *args, **kwargs)
+        return await loop.run_in_executor(None, partial)
+
+    return decorator
 
 
 async def load_async(filename, loop=None):
