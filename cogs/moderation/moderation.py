@@ -12,7 +12,7 @@ from operator import attrgetter
 import discord
 from discord.ext import commands
 
-from utils import db, formats, time
+from utils import cache, db, formats, time
 from utils.colors import random_color
 from utils.context_managers import temporary_attribute
 from utils.examples import get_example, static_example, wrap_example
@@ -924,6 +924,7 @@ class Moderation:
 
     # Corresponding events for that crap
 
+    @cache.cache(max_size=5)
     async def on_message(self, message):
         await self.check_slowmode(message)
 
