@@ -12,6 +12,7 @@ DREAMHUB_INFO_CHANNEL = 512290391220027433
 class DreamhubExclusive:
     def __init__(self, bot):
         self.bot = bot
+        await self.bot.wait_until_ready()  # To prevent errors in case this cog will be loaded before the Fun cog
 
         cog = self.bot.get_cog('Fun')
         self.get_image = cog.retrieve_greeting
