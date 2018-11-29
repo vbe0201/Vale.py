@@ -117,17 +117,6 @@ class IdiotClient:
 
         return IdiotResponse.parse_result(result=json_response, status_code=status)
 
-
-class Fun(IdiotClient):
-    def __init__(self, bot):
-        super().__init__(bot.idiotic_api_key, dev=True, session=bot.session)
-
-        self.bot = bot
-
-    async def __error(self, ctx, error):
-        if isinstance(error, IdiotError):
-            await ctx.send(error)
-
     async def retrieve_greeting(self, type, version, bot, avatar, username, discriminator, guild_name, member_count, *, message=None):
         """This represents the base for Welcome/Goodbye messages."""
 
@@ -148,6 +137,17 @@ class Fun(IdiotClient):
             raise IdiotError('Failed to retrieve a Greeting Image.')
 
         return discord.File(result.data, 'greeting.png')
+
+
+class Fun(IdiotClient):
+    def __init__(self, bot):
+        super().__init__(bot.idiotic_api_key, dev=True, session=bot.session)
+
+        self.bot = bot
+
+    async def __error(self, ctx, error):
+        if isinstance(error, IdiotError):
+            await ctx.send(error)
 
     @commands.command(name='osu')
     async def _osu(self, ctx, theme: typing.Optional[int] = 3, *, user: str = None):

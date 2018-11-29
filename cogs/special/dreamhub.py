@@ -3,6 +3,8 @@ This cog is just for the Dreamhub guild.
 It mainly provides Welcome and Goodbye messages.
 """
 
+from cogs.fun.fun import IdiotClient
+
 DREAMHUB_GUILD_ID = 505407672028495872
 DREAMHUB_WELCOME_CHANNEL = 508633975540023309
 DREAMHUB_FAREWELL_CHANNEL = 508635141539627019
@@ -13,8 +15,9 @@ class DreamhubExclusive:
     def __init__(self, bot):
         self.bot = bot
 
-        cog = self.bot.get_cog('Fun')
-        self.get_image = cog.retrieve_greeting
+        client = IdiotClient(bot.idiotic_api_key, dev=True, session=bot.session)
+        self.get_image = client.retrieve_greeting
+        del client
 
     def __local_check(self, ctx):
         # For future reference if any special commands will be implemented.
