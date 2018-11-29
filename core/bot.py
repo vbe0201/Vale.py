@@ -262,9 +262,9 @@ class ValePy(commands.AutoShardedBot):
         if not modules:
             return super().load_extension(name)
 
-        with contextlib.suppress(discord.ClientException):
             for name in modules:
-                super().load_extension(name)
+                with contextlib.suppress(discord.ClientException):
+                    super().load_extension(name)
 
         self.extensions[name] = importlib.import_module(name)
 
