@@ -11,7 +11,6 @@ import traceback
 from functools import partial
 
 import discord
-import psutil
 from discord.ext import commands
 
 from utils import disambiguate
