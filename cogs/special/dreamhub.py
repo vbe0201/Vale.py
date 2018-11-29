@@ -14,7 +14,7 @@ DREAMHUB_INFO_CHANNEL = 512290391220027433
 class DreamhubExclusive:
     def __init__(self, bot):
         self.bot = bot
-        await self.bot.wait_until_ready()  # To prevent errors in case this cog will be loaded before the Fun cog
+        await self.bot.wait_until_ready()
 
         client = IdiotClient(bot.idiotic_api_key, dev=True, session=bot.session)
         self.get_image = client.retrieve_greeting
