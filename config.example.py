@@ -21,6 +21,9 @@ wh_url = ''
 # The ID of the bot's owner.
 owner_id = 1234567890
 
+# The invite code for the bot's support server (if given)
+support_server = ''
+
 # The initial extensions that will be loaded when the bot starts. Specify the directory where to search for the extensions.
 cog_dir = 'cogs'   # Only change this if you want to load cogs from another directory.
 
