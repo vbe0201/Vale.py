@@ -924,7 +924,6 @@ class Moderation:
 
     # Corresponding events for that crap
 
-    @cache.cache(max_size=5)
     async def on_message(self, message):
         await self.check_slowmode(message)
 
