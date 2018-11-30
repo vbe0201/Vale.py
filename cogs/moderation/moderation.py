@@ -39,7 +39,7 @@ class WarnPunishments(db.Table, table_name='warn_punishments'):
     guild_id = db.Column(db.BigInt)
     warns = db.Column(db.BigInt)
     type = db.Column(db.Text)
-    duration = db.Column(db.Integer, default=0)
+    duration = db.Column(db.Integer, nullable=True, default=0)
 
     __create_extra__ = ['PRIMARY KEY (guild_id, warns)']
 
