@@ -21,7 +21,7 @@ from utils.jsonfile import JSONFile
 RUST_GUILD_ID = 488103711885754408
 RUST_GENERAL_CHAT = 488383699185041418
 
-RUST_EMOTE = '<:rust:477436806959202324>'  # 2
+RUST_EMOTE = '<:rust:477436806959202324>'
 
 fmt = re.compile(r'##(?P<number>[0-9]+)')
 
