@@ -21,7 +21,7 @@ from utils.jsonfile import JSONFile
 RUST_GUILD_ID = 488103711885754408
 RUST_GENERAL_CHAT = 488383699185041418
 
-RUST_EMOTE = '<:rust:477436806959202324>'  # 2
+RUST_EMOTE = '<:rust:477436806959202324>'
 
 fmt = re.compile(r'##(?P<number>[0-9]+)')
 
@@ -170,7 +170,7 @@ class RustExclusive:
         await self.set_welcome_message([])
         await ctx.message.add_reaction(self.bot.bot_emojis.get('success'))
 
-    @commands.command(name='rust')
+    @commands.command(name='rust', hidden=True)
     @commands.cooldown(1, 10.0, commands.BucketType.user)
     async def _rust(self, ctx, *, code: RustCode):
         """Evaluates some Rust code.
