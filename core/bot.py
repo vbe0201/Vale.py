@@ -267,7 +267,7 @@ class ValePy(commands.AutoShardedBot):
                     super().load_extension(name)
                 except discord.ClientException as e:
                      if 'extension does not have a setup function' not in str(e):
-                            raise
+                        raise
 
         self.extensions[name] = importlib.import_module(name)
 
