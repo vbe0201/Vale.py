@@ -467,7 +467,7 @@ class ValePy(commands.AutoShardedBot):
         code = config.support_server
         if not code:
             return '<No support server for this bot provided>'
-        
+
         return f'https://discord.gg/{code}'
 
     @discord.utils.cached_property
