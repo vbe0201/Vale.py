@@ -262,12 +262,12 @@ class ValePy(commands.AutoShardedBot):
         if not modules:
             return super().load_extension(name)
 
-            for name in modules:
-                try:
-                    super().load_extension(name)
-                except discord.ClientException as e:
-                     if 'extension does not have a setup function' not in str(e):
-                        raise
+        for name in modules:
+            try:
+                super().load_extension(name)
+            except discord.ClientException as e:
+                if 'extension does not have a setup function' not in str(e):
+                    raise
 
         self.extensions[name] = importlib.import_module(name)
 
