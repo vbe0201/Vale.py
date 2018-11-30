@@ -461,7 +461,11 @@ class ValePy(commands.AutoShardedBot):
 
     @property
     def support_server(self):
-        return 'https://discord.gg/6cbxXVm'
+        code = config.support_server
+        if not code:
+            return '<No support server for this bot provided>'
+        
+        return f'https://discord.gg/{code}'
 
     @discord.utils.cached_property
     def minimal_invite_url(self):
