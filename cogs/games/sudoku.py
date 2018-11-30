@@ -614,12 +614,13 @@ class Sudoku:
         """Starts a new Sudoku game.
 
         You can optionally provide a difficulty or just use `{prefix}sudoku` and choose afterwards.
+        **This requires you to have 50 \N{MONEY WITH WINGS}. See `{prefix}commands Currency` for more details.**
         """
 
         try:
             await money_required(ctx, 50)
         except NotEnoughMoney:
-            return await ctx.send('Hey, hey, hey, you are missing **50** \N{MONEY WITH WINGS}.')
+            return await ctx.send('Hey, hey, hey, you don\'t have enough \N{MONEY WITH WINGS} to play this game.')
 
         if ctx.author.id in self.sessions:
             return await ctx.send('Please finish your other Sudoku game first.')
