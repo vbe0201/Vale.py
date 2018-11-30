@@ -170,7 +170,7 @@ class RustExclusive:
         await self.set_welcome_message([])
         await ctx.message.add_reaction(self.bot.bot_emojis.get('success'))
 
-    @commands.command(name='rust')
+    @commands.command(name='rust', hidden=True)
     @commands.cooldown(1, 10.0, commands.BucketType.user)
     async def _rust(self, ctx, *, code: RustCode):
         """Evaluates some Rust code.
