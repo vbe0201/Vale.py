@@ -3,7 +3,7 @@
   <strong>A bot to support Discord servers that I like.</strong>
   <br><br>
   <a href="https://github.com/itsVale/Vale.py/wiki"><img src="https://user-images.githubusercontent.com/38182450/43689699-b822f4fe-98fe-11e8-89c9-5fa5da75d088.png" width="200" /></a> &nbsp;
-  <a href="#"><img src="https://user-images.githubusercontent.com/38182450/43689793-c45cbea2-98ff-11e8-828a-53d29f425d9c.png" width="200" /></a> &nbsp;
+  <a href="https://discord.gg/6cbxXVm"><img src="https://user-images.githubusercontent.com/38182450/43689793-c45cbea2-98ff-11e8-828a-53d29f425d9c.png" width="200" /></a> &nbsp;
   <a href="https://discordapp.com/oauth2/authorize?client_id=458286335304794127&scope=bot&permissions=281143415"><img src="https://user-images.githubusercontent.com/38182450/43689573-e7e657aa-98fc-11e8-84a4-38d99df2dade.png" width="200" /></a><br><br>
   <a class="badge-ci-passing" href="https://travis-ci.com/itsVale/Vale.py"><img src="https://travis-ci.com/itsVale/Vale.py.svg?branch=master" /></a>
   <a href="https://codeclimate.com/github/itsVale/Vale.py/maintainability"><img src="https://api.codeclimate.com/v1/badges/31d858820986fa7b3a34/maintainability" /></a>
