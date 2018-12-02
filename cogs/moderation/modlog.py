@@ -78,6 +78,7 @@ class ModLogEntry(db.Table, table_name='modlog'):
 class ModLogTargets(db.Table, table_name='modlog_targets'):
     id = db.Column(db.Serial, primary_key=True)
     entry_id = db.ForeignKey(ModLogEntry.id)
+    user_id = db.Column(db.BigInt)
     mod_id = db.Column(db.BigInt)
 
 
@@ -245,20 +246,20 @@ class ModLog:
 
         return embed
 
-    async def _insert_case(self, guild_id, targets, query, args, connection=None):
+    async def _insert_case(self, guild_id, mod_id, targets, query, args, connection=None):
         connection = connection or self.bot.pool
 
         if len(targets) == 1:
             query = f"""
                 WITH modlog_insert AS ({query})
-                INSERT INTO modlog_targets (entry_id, user_id)
-                VALUES      ((SELECT id FROM modlog_insert), ${len(args) + 1});
+                INSERT INTO modlog_targets (entry_id, user_id, mod_id)
+                VALUES      ((SELECT id FROM modlog_insert), ${len(args) + 1}, ${len(args) + 2});
             """
-            await connection.execute(query, *args, targets[0].id)
+            await connection.execute(query, *args, targets[0].id, mod_id)
         else:
             entry_id = await connection.execute(query, *args)
             columns = ('entry_id', 'user_id')
-            to_insert = [(entry_id, target.id) for target in targets]
+            to_insert = [(entry_id, target.id, mod_id) for target in targets]
 
             await connection.copy_records_to_table('modlog_targets', columns=columns, records=to_insert)
 
@@ -349,7 +350,7 @@ class ModLog:
             if query_args:
                 query, args = query_args
 
-                await self._insert_case(connection=ctx.db, guild_id=ctx.guild.id, targets=targets, query=query, args=args)
+                await self._insert_case(connection=ctx.db, guild_id=ctx.guild.id, mod_id=ctx.author.id, targets=targets, query=query, args=args)
 
     async def _poll_audit_log(self, guild, user, *, action):
         if (action, guild.id, user.id) in self._cache:
@@ -389,7 +390,7 @@ class ModLog:
             if query_args:
                 query, args = query_args
 
-                await self._insert_case(connection=self.bot.pool, guild_id=guild.id, targets=targets, query=query, args=args)
+                await self._insert_case(connection=self.bot.pool, guild_id=guild.id, mod_id='Audit Logs', targets=targets, query=query, args=args)
 
     async def _poll_ban(self, guild, user, *, action):
         if ('softban', guild.id, user.id) in self._cache:
