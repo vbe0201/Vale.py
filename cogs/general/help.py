@@ -18,7 +18,7 @@ class Help:
         embed = (discord.Embed(description=self.bot.description, color=random_color())
                  .add_field(name='Want me in your server?', value=f'[Click me]({self.bot.invite_url})', inline=False)
                  .add_field(name='Invite me only with core perms', value=f'[Click me]({self.bot.minimal_invite_url})', inline=False)
-                 .add_field(name='Need help with this shitbot?', value=f'DM that retard who coded it -> `Vale#5252`', inline=False)
+                 .add_field(name='Need help with this shitbot?', value=f'[Join the official support server]({self.bot.support_server})', inline=False)
                  .add_field(name='Curious about how Vale ~~skidded~~ wrote this bot?',
                             value=f'Check out my source code [here]({self.bot.source})', inline=False)
                  )
