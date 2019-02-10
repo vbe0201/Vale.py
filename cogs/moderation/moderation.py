@@ -230,6 +230,8 @@ class Moderation:
         self.slowmode_bucket = {}
 
         if hasattr(self.bot, '__mod_mute_role_create_bucket__'):
+            self._mute_role_create_cooldowns = self.bot.__mod_mute_role_create_bucket__
+        else:
             self._mute_role_create_cooldowns = commands.CooldownMapping.from_cooldown(2, 600, commands.BucketType.guild)
 
     def __unload(self):
