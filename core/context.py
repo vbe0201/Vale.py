@@ -115,8 +115,8 @@ class Context(commands.Context):
             if not destination.permissions_for(self.me).add_reactions:
                 raise RuntimeError('Bot is missing Add Reactions permisson.')
 
-        config = self.bot.emoji_config
-        confirm_emoji, deny_emoji = emojis = [config.confirm, config.deny]
+        config = self.bot.bot_emojis.get
+        confirm_emoji, deny_emoji = emojis = [config('success'), config('failure')]
         is_valid_emoji = frozenset(map(str, emojis)).__contains__
 
         instructions = f'{confirm_emoji} \N{EM DASH} Yes\n{deny_emoji} \N{EM DASH} No'
