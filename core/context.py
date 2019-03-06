@@ -56,7 +56,7 @@ class Context(commands.Context):
             'Content-Type': content_type or 'text/plain',
         }
 
-        async with self.session.post('https://hastebin.com/documents', data=data, headers=headers) as document:
+        async with self.session.post('https://hasteb.in/documents', data=data, headers=headers) as document:
             text = await document.text(encoding='utf-8')
             if document.headers['content-type'] == 'application/json':
                 result = json.loads(text)
@@ -113,7 +113,7 @@ class Context(commands.Context):
         destination = destination or self.channel
         with contextlib.suppress(AttributeError):
             if not destination.permissions_for(self.me).add_reactions:
-                raise RuntimeError('Bot is missing Add Reactions permisson.')
+                raise RuntimeError('Bot is missing the `Add Reactions` permisson.')
 
         config = self.bot.bot_emojis.get
         confirm_emoji, deny_emoji = emojis = [config('success'), config('failure')]
