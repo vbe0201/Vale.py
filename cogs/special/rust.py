@@ -65,13 +65,13 @@ def find_issue(func):
     return decorator
 
 
-class RustExclusive:
+class RustExclusive(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
 
         self.rust_guild = JSONFile('rust_guild.json')
 
-    def __local_check(self, ctx):
+    def cog_check(self, ctx):
         return ctx.guild and ctx.guild.id == RUST_GUILD_ID
 
     def get_welcome_messages(self):
@@ -91,19 +91,21 @@ class RustExclusive:
 
         return code.strip('` \n')
 
+    @commands.Cog.listener()
     @find_issue
     async def on_message(self, message):
         """This is basically just here to give people the possibility to search for Issues and Pull Requests to the Rust repository."""
 
+    @commands.Cog.listener()
     async def on_member_join(self, member):
-        if not self.__local_check(member):
+        if not self.cog_check(member):
             return
 
         message = random.choice(self.get_welcome_messages())
         channel = await member.guild.get_channel(RUST_GENERAL_CHAT)
         await channel.send(message.format(member=member.mention, guild=str(member.guild)))
 
-    @commands.group(name='messages', invoke_without_command=True, hidden=True)
+    @commands.group(name='messages', invoke_without_command=True)
     async def _messages(self, ctx):
         """Shows all set welcome messages for this server."""
 
@@ -170,7 +172,7 @@ class RustExclusive:
         await self.set_welcome_message([])
         await ctx.message.add_reaction(self.bot.bot_emojis.get('success'))
 
-    @commands.command(name='rust', hidden=True)
+    @commands.command(name='rust')
     @commands.cooldown(1, 10.0, commands.BucketType.user)
     async def _rust(self, ctx, *, code: RustCode):
         """Evaluates some Rust code.

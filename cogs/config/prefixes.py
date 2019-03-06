@@ -37,7 +37,7 @@ class RemovablePrefix(Prefix):
         return random.choice(ctx.bot.get_guild_prefixes(ctx.guild.id))
 
 
-class Prefixes:
+class Prefixes(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
 

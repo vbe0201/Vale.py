@@ -93,7 +93,7 @@ def _format_changelog_with_embed(version, url):
     return embed
 
 
-class Meta:
+class Meta(commands.Cog):
     """Primary a class that provides some meta information about the bot."""
 
     def __init__(self, bot):

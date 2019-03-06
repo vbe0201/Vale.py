@@ -44,13 +44,13 @@ def find_issue(func):
     return decorator
 
 
-class ShitcordExclusive:
+class ShitcordExclusive(commands.Cog, command_attrs=dict(hidden=True)):
     def __init__(self, bot):
         self.bot = bot
         self._invite_cache = {}
         self.invites_task = self.bot.loop.create_task(self._prepare_invites())
 
-    def __local_check(self, ctx):
+    def cog_check(self, ctx):
         return ctx.guild and ctx.guild.id == SHITCORD_GUILD_ID
 
     async def _prepare_invites(self):
@@ -63,6 +63,7 @@ class ShitcordExclusive:
             for invite in invites
         }
 
+    @commands.Cog.listener()
     async def on_member_join(self, member):
         # Only the Shitcord guild is interesting
         if member.guild.id != SHITCORD_GUILD_ID:
@@ -83,6 +84,7 @@ class ShitcordExclusive:
 
             self._invite_cache[invite.code] = invite.uses
 
+    @commands.Cog.listener()
     @find_issue
     async def on_message(self, message):
         # This listener is just here because of the issue/pull request search for the Shitcord GitHub repo.
@@ -108,7 +110,7 @@ class ShitcordExclusive:
         else:
             await ctx.message.add_reaction('\N{HEAVY PLUS SIGN}')
 
-    @commands.command(name='shitupdates', hidden=True)
+    @commands.command(name='shitupdates')
     async def _shitupdates(self, ctx):
         """Gives you the `Shitupdates` role.
 
@@ -119,7 +121,7 @@ class ShitcordExclusive:
 
         await self.toggle_role(ctx, SHITCORD_UPDATES_ROLE)
 
-    @commands.command(name='kartoffelbauer', hidden=True)
+    @commands.command(name='kartoffelbauer')
     async def _kartoffelbauer(self, ctx):
         """Gives you the `Kartoffelbauer` role.
 
@@ -132,7 +134,7 @@ class ShitcordExclusive:
 
         await self.toggle_role(ctx, SHITCORD_GERMAN_ROLE)
 
-    @commands.command(name='helper', hidden=True)
+    @commands.command(name='helper')
     async def _shitcord_helper(self, ctx):
         """Gives you the `Shitcord Helper` role.
 

@@ -105,7 +105,7 @@ class StarBoardConfig:
         return guild and guild.get_channel(self.channel_id)
 
 
-class StarBoard:
+class StarBoard(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
 
@@ -116,10 +116,10 @@ class StarBoard:
         self._about_to_be_deleted = set()
         self._locks = weakref.WeakValueDictionary()
 
-    def __unload(self):
+    def cog_unload(self):
         self._cleaner.cancel()
 
-    async def __error(self, ctx, error):
+    async def cog_command_error(self, ctx, error):
         if isinstance(error, StarBoardError):
             await ctx.send(error)
 
@@ -244,12 +244,15 @@ class StarBoard:
             query = 'DELETE FROM starboard WHERE id = $1;'
             await con.execute(query, channel.guild.id)
 
+    @commands.Cog.listener()
     async def on_raw_reaction_add(self, payload):
         await self.reaction_action('star', payload)
 
+    @commands.Cog.listener()
     async def on_raw_reaction_remove(self, payload):
         await self.reaction_action('unstar', payload)
 
+    @commands.Cog.listener()
     async def on_raw_message_delete(self, payload):
         if payload.message_id in self._about_to_be_deleted:
             self._about_to_be_deleted.discard(payload.message_id)
@@ -263,6 +266,7 @@ class StarBoard:
             query = 'DELETE FROM starboard_entries WHERE bot_message_id = $1;'
             await con.execute(query, list(payload.message_id))
 
+    @commands.Cog.listener()
     async def on_raw_bulk_message_delete(self, payload):
         if payload.message_ids <= self._about_to_be_deleted:
             self._about_to_be_deleted.difference_update(payload.message_ids)
@@ -276,6 +280,7 @@ class StarBoard:
             query = 'DELETE FROM starboard_entries WHERE bot_message_id = ANY($1::BIGINT[]);'
             await con.execute(query, list(payload.message_ids))
 
+    @commands.Cog.listener()
     async def on_raw_reaction_clear(self, payload):
         channel = self.bot.get_channel(payload.channel_id)
         if not channel or not isinstance(channel, discord.TextChannel):

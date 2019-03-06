@@ -222,7 +222,7 @@ def _num_warns_example(_):
     return random.randint(3, 5)
 
 
-class Moderation:
+class Moderation(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
 
@@ -234,7 +234,7 @@ class Moderation:
         else:
             self._mute_role_create_cooldowns = commands.CooldownMapping.from_cooldown(2, 600, commands.BucketType.guild)
 
-    def __unload(self):
+    def cog_unload(self):
         self.bot.__mod_mute_role_create_bucket__ = self._mute_role_create_cooldowns
 
     async def call_mod_log_invoke(self, invoke, ctx):
@@ -926,6 +926,7 @@ class Moderation:
 
     # Corresponding events for that crap
 
+    @commands.Cog.listener()
     async def on_message(self, message):
         await self.check_slowmode(message)
 
@@ -937,6 +938,7 @@ class Moderation:
 
         await self._regen_muted_role_perms(role, channel)
 
+    @commands.Cog.listener()
     async def on_member_join(self, member):
         expires = await self._remove_time_entry(member.guild, member)
         if not expires:
@@ -948,6 +950,7 @@ class Moderation:
 
         await self._do_mute(member, expires + datetime.timedelta(seconds=3600), role, reason='Mute Evasion')
 
+    @commands.Cog.listener()
     async def on_member_update(self, before, after):
         removed_roles = set(before.roles).difference(after.roles)
         if not removed_roles:

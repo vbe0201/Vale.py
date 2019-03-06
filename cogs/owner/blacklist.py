@@ -38,7 +38,7 @@ class Blacklisted(commands.CheckFailure):
 _GuildOrUser = disambiguate.Union(discord.Guild, discord.User)
 
 
-class Blacklists:
+class Blacklists(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
 
@@ -46,10 +46,10 @@ class Blacklists:
     def emojis(self):
         return self.bot.bot_emojis
 
-    async def __local_check(self, ctx):
+    async def cog_check(self, ctx):
         return await ctx.bot.is_owner(ctx.author)
 
-    async def __global_check_once(self, ctx):
+    async def bot_check_once(self, ctx):
         row = await self.get_blacklist(ctx.author.id, con=ctx.db)
         if row:
             raise Blacklisted('You have been blacklisted by my owner.', row['reason'])

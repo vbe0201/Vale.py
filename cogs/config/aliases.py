@@ -54,7 +54,7 @@ class AliasCommand(commands.Converter):
         return ctx.__alias_example__[1]
 
 
-class Aliases:
+class Aliases(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
 
@@ -127,6 +127,7 @@ class Aliases:
         prefixes = self.bot.get_guild_prefixes(message.guild)
         return next(filter(message.content.startswith, prefixes), None)
 
+    @commands.Cog.listener()
     async def on_message(self, message):
         if not message.guild:
             return

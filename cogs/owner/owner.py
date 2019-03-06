@@ -30,7 +30,7 @@ def _extension_example(ctx):
     return random.choice(list(ctx.bot.extensions))
 
 
-class Owner:
+class Owner(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
         self._last_result = None
@@ -39,7 +39,7 @@ class Owner:
     def emojis(self):
         return self.bot.bot_emojis
 
-    async def __local_check(self, ctx):
+    async def cog_check(self, ctx):
         return await ctx.bot.is_owner(ctx.author)
 
     def _create_env(self, ctx):

@@ -139,13 +139,13 @@ class IdiotClient:
         return discord.File(result.data, 'greeting.png')
 
 
-class Fun(IdiotClient):
+class Fun(commands.Cog, IdiotClient):
     def __init__(self, bot):
         super().__init__(bot.idiotic_api_key, dev=True, session=bot.session)
 
         self.bot = bot
 
-    async def __error(self, ctx, error):
+    async def cog_command_error(self, ctx, error):
         if isinstance(error, IdiotError):
             await ctx.send(error)
 

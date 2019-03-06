@@ -167,13 +167,13 @@ _plonk_embed_mappings = {
 PLONK_ICON = emoji_url('\N{HAMMER}')
 
 
-class Permissions:
+class Permissions(commands.Cog):
     """Used for enabling or disabling commands for a channel, member, role or even the whole server."""
 
     def __init__(self, bot):
         self.bot = bot
 
-    async def __global_check_once(self, ctx):
+    async def bot_check_once(self, ctx):
         if not ctx.guild:
             return True
 
@@ -188,7 +188,7 @@ class Permissions:
         if isinstance(error, (PermissionDenied, InvalidPermissions)):
             await ctx.send(error)
 
-    async def __error(self, ctx, error):
+    async def cog_command_error(self, ctx, error):
         if isinstance(error, commands.MissingPermissions):
             if await ctx.bot.is_owner(ctx.author):
                 return

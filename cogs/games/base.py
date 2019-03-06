@@ -120,7 +120,7 @@ def _dummy_cm(*args, **kwargs):
     yield
 
 
-class TwoPlayerGameCog:
+class TwoPlayerGameCog(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
         self.running_games = {}
@@ -154,9 +154,9 @@ class TwoPlayerGameCog:
             command = gc(name=name, help=game_help)(member)
             setattr(cls, f'{cmd_name}_{name}', command)
 
-        setattr(cls, f'_{cls.__name__}__error', cls._error)
+        setattr(cls, 'cog_command_error', cls.cog_command_error)
 
-    async def _error(self, ctx, error):
+    async def cog_command_error(self, ctx, error):
         if isinstance(error, NoSelfArgument):
             message = random.choice((
                 'Don\'t play with yourself.',
