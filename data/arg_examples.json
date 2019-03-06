@@ -28,7 +28,8 @@
     ],
     "shell.command": [
         "echo \"Hello world!\"",
-        "wall Nigga, what?!!"
+        "ls",
+        "touch little_children"
     ],
     "sql.query": "SELECT * FROM table",
     "tag_examples": [
