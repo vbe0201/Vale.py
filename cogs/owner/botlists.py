@@ -2,12 +2,14 @@ import asyncio
 import json
 import logging
 
+from discord.ext import commands
+
 logger = logging.getLogger(__name__)
 
 DISCORD_BOT_LIST_URL = 'https://discordbots.org/api/'
 
 
-class Botlists:
+class Botlists(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
         self._handlers = []

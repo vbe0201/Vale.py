@@ -83,11 +83,11 @@ class TagContent(commands.clean_content):
         return ctx.__tag_example__[1]
 
 
-class Tags:
+class Tags(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
 
-    async def __error(self, ctx, error):
+    async def cog_command_error(self, ctx, error):
         if isinstance(error, TagError):
             await ctx.send(error)
 

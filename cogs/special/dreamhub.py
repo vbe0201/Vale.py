@@ -3,6 +3,8 @@ This cog is just for the Dreamhub guild.
 It mainly provides Welcome and Goodbye messages.
 """
 
+from discord.ext import commands
+
 from cogs.fun.fun import IdiotClient
 
 DREAMHUB_GUILD_ID = 505407672028495872
@@ -11,7 +13,7 @@ DREAMHUB_FAREWELL_CHANNEL = 508635141539627019
 DREAMHUB_INFO_CHANNEL = 512290391220027433
 
 
-class DreamhubExclusive:
+class DreamhubExclusive(commands.Cog, command_attrs=dict(hidden=True)):
     def __init__(self, bot):
         self.bot = bot
         self.bot.loop.create_task(self.bot.wait_until_ready())
@@ -20,12 +22,13 @@ class DreamhubExclusive:
         self.get_image = client.retrieve_greeting
         del client
 
-    def __local_check(self, ctx):
+    def cog_check(self, ctx):
         # For future reference if any special commands will be implemented.
         return ctx.guild and ctx.guild.id == DREAMHUB_GUILD_ID
 
+    @commands.Cog.listener()
     async def on_member_join(self, member):
-        if not self.__local_check(member):
+        if not self.cog_check(member):
             return
 
         channel = member.guild.get_channel(DREAMHUB_WELCOME_CHANNEL)
@@ -38,8 +41,9 @@ class DreamhubExclusive:
         else:
             await channel.send(file=img)
 
+    @commands.Cog.listener()
     async def on_member_remove(self, member):
-        if not self.__local_check(member):
+        if not self.cog_check(member):
             return
 
         channel = member.guild.get_channel(DREAMHUB_FAREWELL_CHANNEL)

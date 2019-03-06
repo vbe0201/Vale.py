@@ -146,14 +146,14 @@ class CaseNumber(commands.Converter):
         return random.choice([-1, *range(1, 10)])
 
 
-class ModLog:
+class ModLog(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
         self._cache_cleaner = asyncio.ensure_future(self._clean_cache())
         self._cache_locks = collections.defaultdict(asyncio.Event)
         self._cache = set()
 
-    def __unload(self):
+    def cog_unload(self):
         self._cache_cleaner.cancel()
 
     async def _clean_cache(self):

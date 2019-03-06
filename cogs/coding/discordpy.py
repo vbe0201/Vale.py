@@ -34,7 +34,7 @@ HELPERS = {
 }
 
 
-class DiscordPy:
+class DiscordPy(commands.Cog):
     """discord.py-related stuff"""
 
     def __init__(self, bot):

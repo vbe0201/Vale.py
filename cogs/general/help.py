@@ -6,7 +6,7 @@ from utils.converter import Category
 from utils.help import CogPages, help_command
 
 
-class Help:
+class Help(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
         self.bot.remove_command('help')

@@ -143,13 +143,13 @@ class JDoodleWrapper:
         return JDoodleResponse.parse_result(result=response)
 
 
-class JDoodle(JDoodleWrapper):
+class JDoodle(commands.Cog, JDoodleWrapper):
     """Commands to interact with the JDoodle compiler API."""
 
     def __init__(self, bot):
         super().__init__(bot)
 
-    async def __error(self, ctx, error):
+    async def cog_command_error(self, ctx, error):
         if isinstance(error, (commands.BadArgument, JDoodleRequestFailedError)):
             await ctx.send(error)
 

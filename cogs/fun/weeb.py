@@ -6,7 +6,7 @@ from discord.ext import commands
 from utils.colors import random_color
 
 
-class Weeb:
+class Weeb(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
 

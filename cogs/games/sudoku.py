@@ -593,7 +593,7 @@ class SudokuMenu(InteractiveSession, stop_emoji=None, stop_fallback=None):
         await super().start()
 
 
-class Sudoku:
+class Sudoku(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
         self.sessions = {}

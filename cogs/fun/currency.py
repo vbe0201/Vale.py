@@ -169,7 +169,7 @@ class NonBlacklistedMember(commands.MemberConverter):
         return get_example(discord.Member, ctx)
 
 
-class Currency:
+class Currency(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
 
@@ -182,11 +182,11 @@ class Currency:
         if len({*self._heads_image.size, *self._tails_image.size}) != 1:
             raise RuntimeError('Images must be the same size.')
 
-    def __unload(self):
+    def cog_unload(self):
         self._heads_image.close()
         self._tails_image.close()
 
-    async def __error(self, ctx, error):
+    async def cog_command_error(self, ctx, error):
         if isinstance(error, NotNegative):
             await ctx.send('Fuck off. You\'re not going to mess up my economy!')
         elif isinstance(error, AccountTooYoung):

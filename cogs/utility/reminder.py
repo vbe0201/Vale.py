@@ -16,7 +16,7 @@ CANCELED_URL = emoji_url('\N{BELL WITH CANCELLATION STROKE}')
 # Idea from Danno, Skidded? Not this time.
 
 
-class Reminder:
+class Reminder(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
 
