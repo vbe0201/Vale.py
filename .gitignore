@@ -103,8 +103,6 @@ venv.bak/
 
 # mypy
 .mypy_cache/
-### Example user template template
-### Example user template
 
 # IntelliJ project files
 .idea
@@ -160,6 +158,3 @@ modules.order
 Module.symvers
 Mkfile.old
 dkms.conf
-Würde Pipfile löschen
-Würde Pipfile.lock löschen
-Würde jsonfiles/ löschen

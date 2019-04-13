@@ -12,8 +12,8 @@ matrix:
       sudo: true
 
 install:
-  - pip install -U pylava
+  - pip install -U pylama
   - pip install -U -r requirements.txt
 
 script:
-  - pylava
+  - pylama .
