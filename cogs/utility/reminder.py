@@ -120,6 +120,7 @@ class Reminder(commands.Cog):
 
         await pages.interact()
 
+    @commands.Cog.listener()
     async def on_reminder_complete(self, timer):
         user_id, channel_id, message = timer.args
         human_delta = human_timedelta(timer.created)

@@ -967,6 +967,7 @@ class Moderation(commands.Cog):
         if mod_log:
             await mod_log.wait_for_cache(name, guild_id, member_id)
 
+    @commands.Cog.listener()
     async def on_mute_complete(self, timer):
         guild_id, member_id, mute_role_id = timer.args
         guild = self.bot.get_guild(guild_id)
@@ -983,6 +984,7 @@ class Moderation(commands.Cog):
 
         await member.remove_roles(role)
 
+    @commands.Cog.listener()
     async def on_tempban_complete(self, timer):
         guild_id, user_id = timer.args
         await self._wait_for_cache('tempban', guild_id, user_id)
