@@ -1,9 +1,9 @@
 """
-This cog is just for the Shitcord guild.
+This cog is just for the Clamor guild.
 It's for management-related things and some nice utilities.
 
-Shitcord is a Discord API library for Python.
-https://github.com/itsVale/Shitcord
+Clamor is a Discord API library for Python.
+https://github.com/clamor-py/Clamor
 
 And here's an invite to the support server
 https://discord.gg/HbKGrVT
@@ -18,11 +18,9 @@ from discord.ext import commands
 DE_INVITE_CODE = 'ZE2eYtz'
 
 SHITCORD_GUILD_ID = 486621752202625024
-SHITCORD_DEFAULT_ROLE = 490678926843052035
-SHITCORD_UPDATES_ROLE = 486643133270982657
-SHITCORD_BOT_ROLE = 505062783201837056
-SHITCORD_GERMAN_ROLE = 493854126116175883
-SHITCORD_HELPER_ROLE = 490678567093665797
+CLAMOR_BOT_ROLE = 505062783201837056
+CLAMOR_GERMAN_ROLE = 493854126116175883
+CLAMOR_HELPER_ROLE = 490678567093665797
 
 fmt = re.compile(r'##(?P<number>[0-9]+)')
 
@@ -31,12 +29,12 @@ def find_issue(func):
     @wraps(func)
     async def decorator(self, message):
         # Kinda abuse but it's the simplest way
-        if not message.guild or message.guild.id != SHITCORD_GUILD_ID:
+        if not message.guild or message.guild.id != CLAMOR_GUILD_ID:
             return
 
         match = fmt.match(message.content)
         if match:
-            url = 'https://github.com/itsVale/Shitcord/issues/' + match.group('number')
+            url = 'https://github.com/clamor-py/Clamor/issues/' + match.group('number')
             await message.channel.send(url)
 
         return await func(self, message)
@@ -44,18 +42,18 @@ def find_issue(func):
     return decorator
 
 
-class ShitcordExclusive(commands.Cog, command_attrs=dict(hidden=True)):
+class ClamorExclusive(commands.Cog, command_attrs=dict(hidden=True)):
     def __init__(self, bot):
         self.bot = bot
         self._invite_cache = {}
         self.invites_task = self.bot.loop.create_task(self._prepare_invites())
 
     def cog_check(self, ctx):
-        return ctx.guild and ctx.guild.id == SHITCORD_GUILD_ID
+        return ctx.guild and ctx.guild.id == CLAMOR_GUILD_ID
 
     async def _prepare_invites(self):
         await self.bot.wait_until_ready()
-        guild = self.bot.get_guild(SHITCORD_GUILD_ID)
+        guild = self.bot.get_guild(CLAMOR_GUILD_ID)
         invites = await guild.invites()
 
         self._invite_cache = {
@@ -65,29 +63,26 @@ class ShitcordExclusive(commands.Cog, command_attrs=dict(hidden=True)):
 
     @commands.Cog.listener()
     async def on_member_join(self, member):
-        # Only the Shitcord guild is interesting
-        if member.guild.id != SHITCORD_GUILD_ID:
+        # Only the CLAMOR guild is interesting
+        if member.guild.id != CLAMOR_GUILD_ID:
             return
 
-        # Automatically assign bots the `Running on Shitcord` role when they're invited to the guild.
+        # Automatically assign bots the `Running on Clamor` role when they're invited to the guild.
         if member.bot:
-            await member.add_roles(discord.Object(SHITCORD_BOT_ROLE))
+            await member.add_roles(discord.Object(CLAMOR_BOT_ROLE))
             return
-
-        # Assign the default `Shitter` role to new members.
-        await member.add_roles(discord.Object(SHITCORD_DEFAULT_ROLE))
 
         invites = await member.guild.invites()
         for invite in invites:
             if invite.code in DE_INVITE_CODE and invite.uses > self._invite_cache[invite.code]:
-                await member.add_roles(discord.Object(SHITCORD_GERMAN_ROLE))
+                await member.add_roles(discord.Object(CLAMOR_GERMAN_ROLE))
 
             self._invite_cache[invite.code] = invite.uses
 
     @commands.Cog.listener()
     @find_issue
     async def on_message(self, message):
-        # This listener is just here because of the issue/pull request search for the Shitcord GitHub repo.
+        # This listener is just here because of the issue/pull request search for the Clamor GitHub repo.
 
         pass
 
@@ -110,17 +105,6 @@ class ShitcordExclusive(commands.Cog, command_attrs=dict(hidden=True)):
         else:
             await ctx.message.add_reaction('\N{HEAVY PLUS SIGN}')
 
-    @commands.command(name='shitupdates')
-    async def _shitupdates(self, ctx):
-        """Gives you the `Shitupdates` role.
-
-        Necessary to receive notifications about Shitcord updates.
-
-        **Only usable on the Shitcord server!**
-        """
-
-        await self.toggle_role(ctx, SHITCORD_UPDATES_ROLE)
-
     @commands.command(name='kartoffelbauer')
     async def _kartoffelbauer(self, ctx):
         """Gives you the `Kartoffelbauer` role.
@@ -129,27 +113,27 @@ class ShitcordExclusive(commands.Cog, command_attrs=dict(hidden=True)):
         Please only assign yourself that role if you actually do speak german.
         *Shitposting or broken Google Translator German won't be tolerated!*
 
-        **Only usable on the Shitcord server!**
+        **Only usable on the Clamor server!**
         """
 
-        await self.toggle_role(ctx, SHITCORD_GERMAN_ROLE)
+        await self.toggle_role(ctx, CLAMOR_GERMAN_ROLE)
 
     @commands.command(name='helper')
-    async def _shitcord_helper(self, ctx):
-        """Gives you the `Shitcord Helper` role.
+    async def _clamor_helper(self, ctx):
+        """Gives you the `Clamor Helper` role.
 
         For explanation, our system in providing help for people is the following:
           - Someone asks a question or needs help with a problem
           - Nobody responds within 20 minutes or nobody is able to answer the question
-          - The person is allowed to ping the Shitcord Helper role.
+          - The person is allowed to ping the Clamor Helper role.
 
         **So please only assign yourself this role if you are fine with being pinged and if you are willing to help!**
 
-        **Only usable on the Shitcord server!**
+        **Only usable on the Clamor server!**
         """
 
-        await self.toggle_role(ctx, SHITCORD_HELPER_ROLE)
+        await self.toggle_role(ctx, CLAMOR_HELPER_ROLE)
 
 
 def setup(bot):
-    bot.add_cog(ShitcordExclusive(bot))
+    bot.add_cog(ClamorExclusive(bot))
